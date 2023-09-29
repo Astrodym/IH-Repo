@@ -1,0 +1,63 @@
+[gd_scene load_steps=9 format=3 uid="uid://m72oaa82j0x7"]
+
+[ext_resource type="SphereMesh" uid="uid://hvpsax33j75w" path="res://Prefabs/SOIbasic.tres" id="1_dh6yw"]
+[ext_resource type="Script" path="res://Scripts/AstroProp_Runtime.cs" id="1_o5ibn"]
+[ext_resource type="Script" path="res://Scripts/new_script.cs" id="2_5rxlw"]
+[ext_resource type="Script" path="res://FreecamScript.gd" id="4_fh5v0"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4inap"]
+albedo_color = Color(0.411765, 0.627451, 0.984314, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q8tf5"]
+albedo_color = Color(1, 0.219608, 0.0784314, 1)
+
+[sub_resource type="Environment" id="Environment_tpq1j"]
+background_mode = 1
+ambient_light_source = 2
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_1wmyw"]
+
+[node name="Astrogation" type="Node3D"]
+script = ExtResource("1_o5ibn")
+
+[node name="Global" type="Node3D" parent="."]
+
+[node name="Moon" type="Node3D" parent="Global"]
+editor_description = "This is a test to discover if the nodepath even fucking works"
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.85969, 0, -13.5365)
+script = ExtResource("2_5rxlw")
+
+[node name="Moon" type="MeshInstance3D" parent="Global/Moon"]
+transform = Transform3D(2.73, 0, 0, 0, 2.73, 0, 0, 0, 2.73, 0, 0, 0)
+mesh = ExtResource("1_dh6yw")
+skeleton = NodePath("../../..")
+
+[node name="Earth" type="Node3D" parent="Global"]
+
+[node name="Earth" type="MeshInstance3D" parent="Global/Earth"]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+mesh = ExtResource("1_dh6yw")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_4inap")
+
+[node name="Sagitta" type="Node3D" parent="Global"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Global/Sagitta"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -21.9251)
+mesh = ExtResource("1_dh6yw")
+surface_material_override/0 = SubResource("StandardMaterial3D_q8tf5")
+
+[node name="Local" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.296575, 0, 0.95501, 0, 1, 0, -0.95501, 0, 0.296575, 163.73, 4.88673, 46.4968)
+current = true
+script = ExtResource("4_fh5v0")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_tpq1j")
+camera_attributes = SubResource("CameraAttributesPractical_1wmyw")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.996849, 0, 0.0793289, 0, 1, 0, -0.0793289, 0, -0.996849, 0, 0, 0)
+light_energy = 3.1
