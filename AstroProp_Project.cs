@@ -1,4 +1,4 @@
-// Jonathan C. Ross 
+// © Jonathan C. Ross 
 // 09 01 2023 
 // All Rights Reserved
 
@@ -12,36 +12,30 @@
 
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
-using System.Xml.Serialization;
 using Godot;
 
 
-public partial class AstroProp_Runtime : Node3D
+public partial class AstroProp : Node
 {
     public class SegmentStepFrame
     {
-        public double MET = 0;
+        public Double MET = 0;
 
-        public Node3D ObjectRef;
         public class StateVectors
         {
             public Godot.Vector3 PosCartesian = new Godot.Vector3();
             public Godot.Vector3 VelCartesian = new Godot.Vector3();
 
-            public Godot.Vector3 NextPosLerp = new Godot.Vector3();
-
             //noballs variable lmao:
             public Godot.Vector3 InstantaneousAccel = new Godot.Vector3(); // Instantaneous propulsion by engines to be considered by ship
         }
-        public double DeltaV;
 
-        public string Event1; // misc register name
+
+        public string Event1; // data register name
         public string Event2;
         public string Event3;
 
-        public double Data1; // register data
+        public double Data1; // data register data
         public double Data2;
         public double Data3;
     }
@@ -50,32 +44,9 @@ public partial class AstroProp_Runtime : Node3D
         public string Name;
         public string Description;
 
-        public double StartFrame;
         // public ObjectRef = GetNode<Spatial>("%MyUniqueNodeName");
 
         public Node3D ObjectRef;
-
-        public ProjectOry(
-           Node3D ObjectRef,
-           string Name,
-           string Description,
-           Godot.Vector3 PosCartesian,
-           Godot.Vector3 VelCartesian,
-           Godot.Vector3 InstantaneousAccel
-
-            
-           )
-        {
-            this.ObjectRef = ObjectRef;
-            this.Name = Name;
-            this.Description = Description;
-            this.ObjectRef = ObjectRef;
-            // this.StateVectors.InstantaneousAccel = InstantaneousAccel;
-
-
-            // this.NBodyRef = Instantiate(NBodyRef, new Godot.Vector3(0, 0, 0), Godot.Quaternion.identity);
-
-        }
 
         List<SegmentStepFrame> Trajectory = new List<SegmentStepFrame>();
 
@@ -87,31 +58,27 @@ public partial class AstroProp_Runtime : Node3D
         public string Name;
         public string Description;
 
-        public Node3D ObjectRef;
+        public Node3D NBodyRef;
 
-        public SegmentStepFrame.StateVectors StateVectors = new SegmentStepFrame.StateVectors();
+        public Godot.Vector3 PosCartesian = new Godot.Vector3();
+        public Godot.Vector3 VelCartesian = new Godot.Vector3();
 
-        public ProjectOry Trajectory;
+        public Godot.Vector3 NextPosLerp = new Godot.Vector3();
 
-        public NBodyAffected(
-            Node3D ObjectRef,
+        //noballs variable lmao:
+        public Godot.Vector3 InstantaneousAccel = new Godot.Vector3();
+
+        public ProjectOry Trajectory = new ProjectOry();
+
+        void Spawn(
             string Name,
-            string Description,
-            Godot.Vector3 PosCartesian,
-            Godot.Vector3 VelCartesian,
-            Godot.Vector3 InstantaneousAccel
+            string Description
 
 
             )
         {
-            this.ObjectRef = ObjectRef;
             this.Name = Name;
             this.Description = Description;
-            this.StateVectors.PosCartesian = PosCartesian;
-            this.StateVectors.VelCartesian = VelCartesian;
-           // this.StateVectors.InstantaneousAccel = InstantaneousAccel;
-
-
             // this.NBodyRef = Instantiate(NBodyRef, new Godot.Vector3(0, 0, 0), Godot.Quaternion.identity);
 
         }
@@ -133,10 +100,10 @@ public partial class AstroProp_Runtime : Node3D
 
 
         public double SMA = 384400 * 1000; //meters lmao
-        public double Inclination = 5.145 * AstroProp_Runtime.Reference.Dynamics.DegToRads; //degrees to the ecliptic, in rads
+        public double Inclination = 5.145 * Reference.Dynamics.DegToRads; //degrees to the ecliptic, in rads
         public double Eccentricity = .0549; // just eccentricity
-        public double ArgPeri = 0 * AstroProp_Runtime.Reference.Dynamics.DegToRads;
-        public double LongAscen = 0 * AstroProp_Runtime.Reference.Dynamics.DegToRads;
+        public double ArgPeri = 0 * AstroProp.Reference.Dynamics.DegToRads;
+        public double LongAscen = 0 * AstroProp.Reference.Dynamics.DegToRads;
         public double MeanAnom = 0;
 
 
@@ -164,7 +131,7 @@ public partial class AstroProp_Runtime : Node3D
             this.GravitationalParameter = GravitationalParameter;
             this.SOI = SOI;
             this.SMA = SMA;
-            this.Inclination = -Inclination;
+            this.Inclination = Inclination;
             this.Eccentricity = Eccentricity;
             this.ArgPeri = ArgPeri;
             this.LongAscen = LongAscen;
@@ -185,7 +152,7 @@ public partial class AstroProp_Runtime : Node3D
             public static double MET = 0; //mean elapsed time
 
             public static double RandomAssConstant = 8.4;
-            public static double TimeCompression = 10000; //100000; // default is 1, 2548800 is 1 lunar month per second
+            public static double TimeCompression = 100000; // default is 1, 2548800 is 1 lunar month per second
 
             public static double DegToRads = Math.PI / 180;
         };
@@ -195,7 +162,7 @@ public partial class AstroProp_Runtime : Node3D
             // first class is always the origin soi
             public class MainReference
             {
-                public Node3D ObjectRef; //= GetNode<Mesh>("Global/Earth");
+                public Mesh ObjectRef; //= GetNode<Mesh>("Global/Earth");
                     //GetNode<Mesh>("Global/Earth");
 
                 public static double Mass = 5.97 * Mathf.Pow(10, 24); //kg
@@ -211,7 +178,7 @@ public partial class AstroProp_Runtime : Node3D
         };
     };
     List<CelestialRender> KeplerContainers = new List<CelestialRender>(100); //List<CelestialRender> KeplerContainers = new List<CelestialRender>(1);
-    List<NBodyAffected> NByContainers = new List<NBodyAffected>(30);
+
 
 
 
@@ -452,17 +419,6 @@ public partial class AstroProp_Runtime : Node3D
         }
         return Coefficient;
     }
-
-    public static double CalculateOrbital(Godot.Vector3 SOI_Pos, Godot.Vector3 Subject_Pos, Godot.Vector3 SOI_Vel, Godot.Vector3 Subject_Vel, double SOI_Mu)
-    {
-        double Relative_Vel = (Subject_Vel - SOI_Vel).Length();
-        double Distance = (Subject_Pos - SOI_Pos).Length();
-
-        double SMA = -(SOI_Mu*Distance)/(Distance*Relative_Vel-2*SOI_Mu);
-        double Period = 2 * System.Math.PI * System.Math.Sqrt(Math.Pow(SMA, 3)/SOI_Mu);
-
-        return SMA;
-    }
     public void MoveCelestial(CelestialRender SOI, double MET)
     {
         Godot.Vector3 PosCartesian = new Godot.Vector3();
@@ -476,67 +432,29 @@ public partial class AstroProp_Runtime : Node3D
 
         PosCartesian = new Godot.Vector3((float)(PosCartesian.X * LocalScale), (float)(PosCartesian.Y * LocalScale), (float)(PosCartesian.Z * LocalScale));
 
-       // SOI.ObjectRef.Translate(PosCartesian);
-        SOI.ObjectRef.Position = (PosCartesian);
-        // GD.Print(PosCartesian);
-        //.transform.position = PosCartesian;
-    }
-
-    public void MoveNBy(NBodyAffected Object, double MET)
-    {
-        Godot.Vector3 PosCartesian = Object.StateVectors.PosCartesian;
-        Godot.Vector3 VelCartesian = Object.StateVectors.VelCartesian;
-        double MET_Frame = MET;
-
-        SY4(ref PosCartesian, ref VelCartesian, Object.StateVectors.InstantaneousAccel, MET);
-
-        double LocalScale = ScaleConversion("ToUnityUnits");
-        // LocalScale = (float)(LocalScale);
-
-        PosCartesian = new Godot.Vector3((float)(PosCartesian.X * LocalScale), (float)(PosCartesian.Y * LocalScale), (float)(PosCartesian.Z * LocalScale));
-
-        // SOI.ObjectRef.Translate(PosCartesian);
-        Object.ObjectRef.Position = (PosCartesian);
-
-
-        Object.StateVectors.PosCartesian = PosCartesian;
-        Object.StateVectors.VelCartesian = VelCartesian;
-        // GD.Print(PosCartesian);
-        //.transform.position = PosCartesian;
+        SOI.ObjectRef.Translate(PosCartesian);
+                     //.transform.position = PosCartesian;
     }
 
     void BeginStepOps()
     {
         Reference.Dynamics.MET += Reference.Dynamics.TimeStep;
         // Begin to do the Celestials 
-        // naaa fuck that
+
 
         // Perform N-Body Ballistics
 
-        foreach (var NBodyAffected in NByContainers)
-        {
-            MoveNBy(NBodyAffected, Reference.Dynamics.MET);
-            //Debug.Log(CelestialRender.Name.ToString());
-        }
 
     }
 
     // Start is called before the first frame update
     public override void _Ready()
     {
-        GD.Print("Boostrapper Startup");
-        // Line ends after this, wtf???
-        GD.Print(GetNode<Node3D>("Global/Moon").Position);
-        
-        GetNode<Node3D>("Global/Moon").Position = (new Vector3(0, 0, 0));
-        GD.Print(GetNode<Node3D>("Global/Moon").Position);
-        //=(new Godot.Vector3(10, 0, 0));
-        GD.Print("Can Translate");                                           //(new Godot.Vector3(10, 0, 0));
-                                                                        // Reference.SOI.MainReference. = GetNode<Node>("Global/Earth");
-                                                                        //Print("AstroPropV2");
-                                                                        //MotionContainer.
-                                                                        //KeplerContainers.Clear();
-        KeplerContainers.Add(new CelestialRender(
+       // Reference.SOI.MainReference. = GetNode<Node>("Global/Earth");
+                                   //Print("AstroPropV2");
+                                   //MotionContainer.
+                                   //KeplerContainers.Clear();
+    KeplerContainers.Add(new CelestialRender(
             "Moon",
             "Our second closest rock",
             GetNode<Node3D>("Global/Moon"),
@@ -544,23 +462,14 @@ public partial class AstroProp_Runtime : Node3D
             4.904 * System.Math.Pow(10, 12),
             64300,
             384400 * 1000,
-            (5.145 + 90) * AstroProp_Runtime.Reference.Dynamics.DegToRads,
+            (5.145 + 90) * AstroProp.Reference.Dynamics.DegToRads,
             .0549, //.0549
-            0 * AstroProp_Runtime.Reference.Dynamics.DegToRads,
-            0 * AstroProp_Runtime.Reference.Dynamics.DegToRads,
+            0 * AstroProp.Reference.Dynamics.DegToRads,
+            0 * AstroProp.Reference.Dynamics.DegToRads,
             0
 
         ));
-        NByContainers.Add(new NBodyAffected(
-            GetNode<Node3D>("Global/Sagitta"),
-            "Sagitta",
-            "a dumbfuck",
-            new Godot.Vector3(1000000,0,0),
-            new Godot.Vector3(9000, 0, 0),
-            new Godot.Vector3(000, 0, 0)
 
-
-        ));
 
         // Debug.Log(Reference.SOI.KeplerContainer);
         // Reference.SOI.PrintProperties()
@@ -600,26 +509,17 @@ public partial class AstroProp_Runtime : Node3D
 
         }
 
-        foreach (var NBodyAffected in NByContainers)
-        {
-            float LerpFloat = (float)RealTimeInterpolate;
-            Godot.Vector3 LerpV3 = NBodyAffected.StateVectors.NextPosLerp - NBodyAffected.StateVectors.PosCartesian;
 
-            NBodyAffected.ObjectRef.Position = NBodyAffected.StateVectors.PosCartesian + LerpV3 * LerpFloat;
-            
-            //Debug.Log(CelestialRender.Name.ToString());
-        }
 
         foreach (var CelestialRender in KeplerContainers)
         {
             MoveCelestial(CelestialRender, RealTimeInterpolate);
             //Debug.Log(CelestialRender.Name.ToString());
         }
-
         // Debug.Log((RealTimeInterpolate));
 
-        // AstroProp_Runtime.Reference.Dynamics.StandardGravParam += 1;
-        // Debug.Log(AstroProp_Runtime.Reference.Dynamics.StandardGravParam.ToString()); ;
+        // AstroProp.Reference.Dynamics.StandardGravParam += 1;
+        // Debug.Log(AstroProp.Reference.Dynamics.StandardGravParam.ToString()); ;
     }
 }
 

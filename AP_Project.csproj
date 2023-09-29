@@ -1,0 +1,381 @@
+﻿<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{BEAA8E84-BDA2-450A-B688-249435611C71}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <NoStandardLibraries>false</NoStandardLibraries>
+    <AssemblyName>ConsoleApplication</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>AP_Project</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AstroProp_Project.cs" />
+    <Compile Include="GDOT\.godot\mono\temp\obj\Debug\.NETCoreApp,Version=v6.0.AssemblyAttributes.cs" />
+    <Compile Include="GDOT\.godot\mono\temp\obj\Debug\UC_V3.AssemblyInfo.cs" />
+    <Compile Include="GDOT\Scripts\AstroProp_Runtime.cs" />
+    <Compile Include="GDOT\Scripts\Debug.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".git\COMMIT_EDITMSG" />
+    <None Include=".git\config" />
+    <None Include=".git\description" />
+    <None Include=".git\FETCH_HEAD" />
+    <None Include=".git\HEAD" />
+    <None Include=".git\hooks\applypatch-msg.sample" />
+    <None Include=".git\hooks\commit-msg.sample" />
+    <None Include=".git\hooks\fsmonitor-watchman.sample" />
+    <None Include=".git\hooks\post-update.sample" />
+    <None Include=".git\hooks\pre-applypatch.sample" />
+    <None Include=".git\hooks\pre-commit.sample" />
+    <None Include=".git\hooks\pre-merge-commit.sample" />
+    <None Include=".git\hooks\pre-push.sample" />
+    <None Include=".git\hooks\pre-rebase.sample" />
+    <None Include=".git\hooks\pre-receive.sample" />
+    <None Include=".git\hooks\prepare-commit-msg.sample" />
+    <None Include=".git\hooks\push-to-checkout.sample" />
+    <None Include=".git\hooks\update.sample" />
+    <None Include=".git\index" />
+    <None Include=".git\info\exclude" />
+    <None Include=".git\logs\HEAD" />
+    <None Include=".git\logs\refs\heads\main" />
+    <None Include=".git\logs\refs\remotes\origin\HEAD" />
+    <None Include=".git\logs\refs\remotes\origin\main" />
+    <None Include=".git\objects\0a\041735d33aeffabd7b50400dfd27c7fb2de333" />
+    <None Include=".git\objects\0d\8de3ac9b8588c0acd5a7995510d74530210348" />
+    <None Include=".git\objects\14\b40c3b5447c22e2e09aa47b65717fbe74651b4" />
+    <None Include=".git\objects\14\fb60c5fa4b31454b65dc497ebf6165cccf0821" />
+    <None Include=".git\objects\16\121269dbe64c2665dcbadf4173fcb027bbbb47" />
+    <None Include=".git\objects\1f\31e5a967f7e7591f806ebbd2082f8398bb408c" />
+    <None Include=".git\objects\1f\638684c5ff3f83d106d99334776929b3f626bc" />
+    <None Include=".git\objects\26\cd17c06d6c609660c923c83924bdc19c533fcf" />
+    <None Include=".git\objects\2a\5933788cd787b0739a4ae34e1aab5b5735acca" />
+    <None Include=".git\objects\2a\9d3aeab702ce9316b93fd6ceec6675c1004404" />
+    <None Include=".git\objects\3b\4dfe515dad632ccc711d06db400b931dd7c5dd" />
+    <None Include=".git\objects\3d\c149014eee5a4f4ac30588d29dc0fd078d3d70" />
+    <None Include=".git\objects\41\d83af72d7332b211cf110e9a0c774a1d3c9775" />
+    <None Include=".git\objects\47\09183670ac629a32ff7df40816c79c7c932daa" />
+    <None Include=".git\objects\48\5daad86a9ea7adc85291977d43f681ac829eb0" />
+    <None Include=".git\objects\48\edff6f6a04f4de843de7fa884e47b13ca6a771" />
+    <None Include=".git\objects\4f\73eff6f2b0def4014f25e73d9e280f58056632" />
+    <None Include=".git\objects\5f\e9005eee5b75f3530e4bc745a97935d6d949cc" />
+    <None Include=".git\objects\63\2f8491e7fcc9d71b7bdeeb790aaba677ff00fc" />
+    <None Include=".git\objects\67\f4b68effc3b146c8b8c1fdc2b76daeb3cadc42" />
+    <None Include=".git\objects\6a\e6910d3ec8a81a5dbc2cc59b42970f74828299" />
+    <None Include=".git\objects\6c\9b270f2f7c048f8dad772ce544444999da4558" />
+    <None Include=".git\objects\71\52b8aa8e71efacfef4f725e09ff57136c778c4" />
+    <None Include=".git\objects\73\7eadff62a1d7c3badd6db1d3a553469cff3d08" />
+    <None Include=".git\objects\77\05ddc32a58ebce4d91a895e004338aeb5cf459" />
+    <None Include=".git\objects\7a\abcbc8270b5d9aa2c8c940577de361e4b11403" />
+    <None Include=".git\objects\8a\d74f78d9c9b9b8f3d68772c6d5aa0cb3fe47e9" />
+    <None Include=".git\objects\8d\95709577475e0cce64a26e0a4a2644c282c815" />
+    <None Include=".git\objects\90\da9b6db46482fa82b51c811848448db4216ce4" />
+    <None Include=".git\objects\92\b2e70756ff0ad264c8f729c7ad24afd4286c6e" />
+    <None Include=".git\objects\a2\6fbacf4b1ef2dd6a6e634516b582157e0f2bac" />
+    <None Include=".git\objects\a3\236ca883bf6c4399f6e8659bf5aa5733e1009b" />
+    <None Include=".git\objects\a3\ce17eb45133411a056b5f30a883deffb04f29a" />
+    <None Include=".git\objects\a7\d76f1a3345824dc70c9238738a19f49a5d4636" />
+    <None Include=".git\objects\a9\096060826be433c0a509df8f1343a08d5fc005" />
+    <None Include=".git\objects\ad\c4fd9291ed41106a5a412c8e86e470de33ab66" />
+    <None Include=".git\objects\b0\58c9b8d3b9351f852a0875cdbbe14229592d18" />
+    <None Include=".git\objects\b1\9cd0117830e067b144b463113190374d41010b" />
+    <None Include=".git\objects\b3\70ceb72740b9a759fe11b364f0d4de27df42f8" />
+    <None Include=".git\objects\b6\4740eb1c76c3eeef7f0e6e922b322bf1220c97" />
+    <None Include=".git\objects\bc\a55abf713300b1703cff96556446aff78445c1" />
+    <None Include=".git\objects\cf\0f53a55a32be815349d5fe3f66631594aec857" />
+    <None Include=".git\objects\d1\cd2ac65a4d7bed0f1020d07eb216ccfc6c8936" />
+    <None Include=".git\objects\d7\a502e7aa27de68c3a48a6c3c73c51e98b6d956" />
+    <None Include=".git\objects\dd\59deac363d24da21236a28696183016443880b" />
+    <None Include=".git\objects\e4\bcbb65f4f334923b09f18faf56767c241a9847" />
+    <None Include=".git\objects\e8\95216ee2c72b79643a0c13d8aa57cfdf96b753" />
+    <None Include=".git\objects\e9\109aeee7ecaee61967e5573d4f4867d775529e" />
+    <None Include=".git\objects\eb\607d4fdec1c9a78c4adc9b569327d4cf3456b2" />
+    <None Include=".git\objects\ed\43fb10382ded87a571d6fbe0b021c238076961" />
+    <None Include=".git\objects\ed\cfbd7bab736868a81809b069bbf2afd9bd21ed" />
+    <None Include=".git\objects\ee\8c1f4f8ec71aae0cda72496eb7bf0fe2aa5960" />
+    <None Include=".git\objects\f0\227574e581dd62ae98b1ce0974a675cd06a7dd" />
+    <None Include=".git\objects\f6\5df726822f3fdb253b8e44804291cbc5c012e1" />
+    <None Include=".git\objects\fa\0f4fc8bd4c48cfa05822e8701279b0fd2b5452" />
+    <None Include=".git\objects\fa\99a516087553e84147719150ff854dfdc38c2b" />
+    <None Include=".git\objects\pack\pack-a5eb911303c758131ca284562d348ec43c5c4b3d.idx" />
+    <None Include=".git\objects\pack\pack-a5eb911303c758131ca284562d348ec43c5c4b3d.pack" />
+    <None Include=".git\packed-refs" />
+    <None Include=".git\refs\heads\main" />
+    <None Include=".git\refs\remotes\origin\HEAD" />
+    <None Include=".git\refs\remotes\origin\main" />
+    <None Include="GDOT\.gitattributes" />
+    <None Include="GDOT\.gitignore" />
+    <None Include="GDOT\.godot\.gdignore" />
+    <None Include="GDOT\.godot\editor\Astrogation.tscn-editstate-623ce0ca314eda78a9f75b0a48f474de.cfg" />
+    <None Include="GDOT\.godot\editor\Astrogation.tscn-folding-623ce0ca314eda78a9f75b0a48f474de.cfg" />
+    <None Include="GDOT\.godot\editor\AstroProp.cs-folding-4ff94901c824f82db60d0f6ecaf30dd3.cfg" />
+    <None Include="GDOT\.godot\editor\AstroProp.cs-folding-eeca998e5b56b192e132f5cdfc010c2e.cfg" />
+    <None Include="GDOT\.godot\editor\AstroPropV3.cs-folding-757c6001600f69fb86fd659d41f19cf8.cfg" />
+    <None Include="GDOT\.godot\editor\Camera.gd-folding-1ddc96c9a9f139b4c7851786abc07b4a.cfg" />
+    <None Include="GDOT\.godot\editor\create_recent.Node" />
+    <None Include="GDOT\.godot\editor\create_recent.Resource" />
+    <None Include="GDOT\.godot\editor\Debug.cs-folding-ca08429b0efb917cdf5fe7d1ce398c89.cfg" />
+    <None Include="GDOT\.godot\editor\editor_layout.cfg" />
+    <None Include="GDOT\.godot\editor\favorites" />
+    <None Include="GDOT\.godot\editor\favorites.Node" />
+    <None Include="GDOT\.godot\editor\favorites.Resource" />
+    <None Include="GDOT\.godot\editor\filesystem_cache8" />
+    <None Include="GDOT\.godot\editor\filesystem_update4" />
+    <None Include="GDOT\.godot\editor\FreecamScript.gd-folding-73426fdcd505ad74e4af6ec51bd471af.cfg" />
+    <None Include="GDOT\.godot\editor\LineDraw_Executable.gd-folding-40c7732f5c34d522be4d451080108f30.cfg" />
+    <None Include="GDOT\.godot\editor\new_script.cs-folding-106da9f3c52d69c464243e51bd99b871.cfg" />
+    <None Include="GDOT\.godot\editor\new_script.cs-folding-282628f29386e30f90ba2e851997f6b8.cfg" />
+    <None Include="GDOT\.godot\editor\node_3d.tscn-editstate-14584830dbc22d3f76a596eed5f4948e.cfg" />
+    <None Include="GDOT\.godot\editor\node_3d.tscn-folding-14584830dbc22d3f76a596eed5f4948e.cfg" />
+    <None Include="GDOT\.godot\editor\project_metadata.cfg" />
+    <None Include="GDOT\.godot\editor\recent_dirs" />
+    <None Include="GDOT\.godot\editor\script_editor_cache.cfg" />
+    <None Include="GDOT\.godot\editor\SOI.tres-folding-ee379edbf99b0519d13d6ba2729ef382.cfg" />
+    <None Include="GDOT\.godot\editor\SOIbasic.tres-folding-4f9475b2fcf92e8661ebfbe6f00c955d.cfg" />
+    <None Include="GDOT\.godot\editor\Test.tscn-editstate-424cafac01f45de89b53d7dc0c0edabc.cfg" />
+    <None Include="GDOT\.godot\editor\Test.tscn-folding-424cafac01f45de89b53d7dc0c0edabc.cfg" />
+    <None Include="GDOT\.godot\editor\TestScript.cs-folding-ac369c30dd35269a32d50fc0dc6b205c.cfg" />
+    <None Include="GDOT\.godot\editor\TestStartup.cs-folding-25cbb3ee77f27b466caa18f727315656.cfg" />
+    <None Include="GDOT\.godot\global_script_class_cache.cfg" />
+    <None Include="GDOT\.godot\imported\icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex" />
+    <None Include="GDOT\.godot\imported\icon.svg-218a8f2b3041327d8a5756f3a245f83b.md5" />
+    <None Include="GDOT\.godot\mono\temp\bin\Debug\UC_V3.deps.json" />
+    <None Include="GDOT\.godot\mono\temp\bin\Debug\UC_V3.runtimeconfig.json" />
+    <None Include="GDOT\.godot\mono\temp\obj\Debug\UC_V3.AssemblyInfoInputs.cache" />
+    <None Include="GDOT\.godot\mono\temp\obj\Debug\UC_V3.assets.cache" />
+    <None Include="GDOT\.godot\mono\temp\obj\Debug\UC_V3.csproj.AssemblyReference.cache" />
+    <None Include="GDOT\.godot\mono\temp\obj\Debug\UC_V3.csproj.BuildWithSkipAnalyzers" />
+    <None Include="GDOT\.godot\mono\temp\obj\Debug\UC_V3.csproj.CopyComplete" />
+    <None Include="GDOT\.godot\mono\temp\obj\Debug\UC_V3.csproj.CoreCompileInputs.cache" />
+    <None Include="GDOT\.godot\mono\temp\obj\Debug\UC_V3.GeneratedMSBuildEditorConfig.editorconfig" />
+    <None Include="GDOT\.godot\mono\temp\obj\Debug\UC_V3.genruntimeconfig.cache" />
+    <None Include="GDOT\.godot\mono\temp\obj\project.assets.json" />
+    <None Include="GDOT\.godot\mono\temp\obj\project.nuget.cache" />
+    <None Include="GDOT\.godot\mono\temp\obj\UC_V3.csproj.nuget.dgspec.json" />
+    <None Include="GDOT\.godot\mono\temp\obj\UC_V3.csproj.nuget.g.props" />
+    <None Include="GDOT\.godot\mono\temp\obj\UC_V3.csproj.nuget.g.targets" />
+    <None Include="GDOT\.godot\shader_cache\BlitShaderRD\a259f96ba1c5ee3c8ac228f89db0ed645f9a7185972526577513b783260ed02a\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\BlitShaderRD\e41903ebda5f82c46502170aa48d0fd2c5605b2173e55019e46f7876fec10899\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\BokehDofShaderRD\1463dd780191d1db839ffe0b974f62a36ed3e8a298a3fa0aae8d7507b4c81e52\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\BokehDofShaderRD\4d092262ae59fafe87a35fa7c486df3fb862cd355b7892119dc4e47706b1752d\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\CanvasOcclusionShaderRD\6481894229b039dd941a9a6270341a89e320213b3491dd64550acf6a8a3df9d2\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\CanvasOcclusionShaderRD\96efcd1a8803079a0f614702d119feba29fd28a6f7fd442d4c13d18f4661809f\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\CanvasSdfShaderRD\886aff207513296aefe4de1131c9126c681e8f87aefda2f7210e32b3a1124609\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\CanvasSdfShaderRD\8ab76afe7e5c51298b56bdf5baf5f82b6e2333e6df5ecf5d96cd4cc53e05bd50\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\CanvasShaderRD\21cdfa90a9c824daa59422bac80a9a8e3fd727ab652c9df19823c7aa97bcbbad\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\CanvasShaderRD\21cdfa90a9c824daa59422bac80a9a8e3fd727ab652c9df19823c7aa97bcbbad\4ec852a08804e533592028acf4549bb0f684d7ab.cache" />
+    <None Include="GDOT\.godot\shader_cache\CanvasShaderRD\21cdfa90a9c824daa59422bac80a9a8e3fd727ab652c9df19823c7aa97bcbbad\6b3b870743b828dcd054fdf31e0034e036dad94f.cache" />
+    <None Include="GDOT\.godot\shader_cache\CanvasShaderRD\21cdfa90a9c824daa59422bac80a9a8e3fd727ab652c9df19823c7aa97bcbbad\7d3bc38ef95ec9de74da0f4336fe04379e9d264c.cache" />
+    <None Include="GDOT\.godot\shader_cache\CanvasShaderRD\21cdfa90a9c824daa59422bac80a9a8e3fd727ab652c9df19823c7aa97bcbbad\98676c93f49a619be763bf730c8db104e1e3ad96.cache" />
+    <None Include="GDOT\.godot\shader_cache\CanvasShaderRD\21cdfa90a9c824daa59422bac80a9a8e3fd727ab652c9df19823c7aa97bcbbad\c58570947be7f76937b1582424c0fd3d81be0352.cache" />
+    <None Include="GDOT\.godot\shader_cache\CanvasShaderRD\21cdfa90a9c824daa59422bac80a9a8e3fd727ab652c9df19823c7aa97bcbbad\ddbe30d4d1be5d69b00075293fd27da8decd4af2.cache" />
+    <None Include="GDOT\.godot\shader_cache\CanvasShaderRD\21cdfa90a9c824daa59422bac80a9a8e3fd727ab652c9df19823c7aa97bcbbad\f3e258e8f7ec2e7e740b62f3bc48ecf5c99fb0db.cache" />
+    <None Include="GDOT\.godot\shader_cache\CanvasShaderRD\d55b6b3d6e53dd70f56f99ffeb2a288c4469b4a348e9173d687a1e83ca2facfc\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\CanvasShaderRD\d55b6b3d6e53dd70f56f99ffeb2a288c4469b4a348e9173d687a1e83ca2facfc\4ec852a08804e533592028acf4549bb0f684d7ab.cache" />
+    <None Include="GDOT\.godot\shader_cache\CanvasShaderRD\d55b6b3d6e53dd70f56f99ffeb2a288c4469b4a348e9173d687a1e83ca2facfc\6b3b870743b828dcd054fdf31e0034e036dad94f.cache" />
+    <None Include="GDOT\.godot\shader_cache\CanvasShaderRD\d55b6b3d6e53dd70f56f99ffeb2a288c4469b4a348e9173d687a1e83ca2facfc\7d3bc38ef95ec9de74da0f4336fe04379e9d264c.cache" />
+    <None Include="GDOT\.godot\shader_cache\CanvasShaderRD\d55b6b3d6e53dd70f56f99ffeb2a288c4469b4a348e9173d687a1e83ca2facfc\98676c93f49a619be763bf730c8db104e1e3ad96.cache" />
+    <None Include="GDOT\.godot\shader_cache\CanvasShaderRD\d55b6b3d6e53dd70f56f99ffeb2a288c4469b4a348e9173d687a1e83ca2facfc\c58570947be7f76937b1582424c0fd3d81be0352.cache" />
+    <None Include="GDOT\.godot\shader_cache\CanvasShaderRD\d55b6b3d6e53dd70f56f99ffeb2a288c4469b4a348e9173d687a1e83ca2facfc\ddbe30d4d1be5d69b00075293fd27da8decd4af2.cache" />
+    <None Include="GDOT\.godot\shader_cache\CanvasShaderRD\d55b6b3d6e53dd70f56f99ffeb2a288c4469b4a348e9173d687a1e83ca2facfc\f3e258e8f7ec2e7e740b62f3bc48ecf5c99fb0db.cache" />
+    <None Include="GDOT\.godot\shader_cache\ClusterDebugShaderRD\135ec57619b404625c80fa2da4bc3b7ea4da898d28de309c229fdf7ec834bf7d\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\ClusterDebugShaderRD\264d76907acb7bdb0084dd47aa4cfd7794431b20f7c246fe88b8364988476112\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\ClusterRenderShaderRD\626b45f0d2a7d100410a2ee23b09683988f36d5ab0d688879aad19b458667d31\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\ClusterRenderShaderRD\dcac8cb57246443d373cac144c437cbcd3e856c4a4a665bdd338737ed2c93145\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\ClusterStoreShaderRD\41108dfa31355109d589dcf69eef6156fb62eacd136f2979033df0ba07666bc3\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\ClusterStoreShaderRD\b286aa64f292ae179bec749533a880e84bcb145a6169916c1103e9ef37f1cb85\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\CopyShaderRD\21136b92b5cc370a774450f7138e2d774e136889c3cc94888fbc8d4478e3d1c2\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\CopyShaderRD\86ec202d356364143f49c8c2e4388dc6476fdcd5cb35579c9ca5214747dd1911\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\CopyToFbShaderRD\1b8f6eb90672e529fd15d10ee8f1b80c0fc7a295a8c022a5f5f182f4cc59d041\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\CopyToFbShaderRD\843b7ff36a87ce3220bc85cbf59758b159c2a6f6ba8032dc311c442857fac2f8\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\CubemapDownsamplerShaderRD\54213fa632340be8fa208a4c11f8958426d36be98bbdedc4bc8a9138a6b620aa\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\CubemapDownsamplerShaderRD\d7f423dd1f6781828a2adf411f4a47e0b54a98f47bbccee88d6da9da6e5e1bb9\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\CubemapFilterShaderRD\2a7be7f2ad4586ab64ad90e1895b01bcfcc11b6a3a3997a0eff4a98a7969eede\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\CubemapFilterShaderRD\a15a1341306bed3e35baf90310f5ee475f9ba9ac620408891f41f4139c240e9a\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\CubemapRoughnessShaderRD\22dfbb5c13b5d19e5685ca330cfde48b087845e7d7769bb2d054a9d87fd834bd\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\CubemapRoughnessShaderRD\6e9fc6b7050d6586274984fc077b2797caad9bba9b8e9c3289a0049c27a17181\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\CubeToDpShaderRD\32df1ad4480d9561dfcfd47d189c40be4dde719b28e09fdbb4dc8132123b6887\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\CubeToDpShaderRD\47b993a0718ba9e6672bd021b1ffae47308ea3b9eacc67a5f601dfce94ffe8e4\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\FsrUpscaleShaderRD\4bbe3625f98bf7228ae97a7855c93142a50dd1e9bf8a6716b957dafa5e6dce18\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\FsrUpscaleShaderRD\f669a6639d64685e9b604b13b82c9e39c7aff6bf6995aaa34dc63652c88861cd\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\GiShaderRD\d437a86c202470421be54dd93fcbf738f28f7e55be69f3f8655b6e03947da547\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\GiShaderRD\db18e3f3fdcfa973895afb477ff44309ebfe9aeedb88ea4d49caba3814785351\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\LuminanceReduceShaderRD\653a4afe87f8039f2f90d998f3879ffef522dda2b12d0a93e26a58b122ea2df8\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\LuminanceReduceShaderRD\de49e8e34e25438f835e4f3a4ace13cb51e53c49ea343978b5de4b52ad53ef06\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\ParticlesCopyShaderRD\20f947661b689ae87f2cde2e7fea624cfc7b2a553b891c4f9e2bee73c6aa5202\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\ParticlesCopyShaderRD\df2f0defd0b6b017a07b0742ac4bd2c8050158774167cf98c8c97a9c6f18889e\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\ParticlesShaderRD\a350f07ea173ce1b8f3a180507f1a53da122dc5f5d322e29898c6ecd8bb95d8c\f128cab0b22fb7e0d9f023d6cdb81309be392d95.cache" />
+    <None Include="GDOT\.godot\shader_cache\ParticlesShaderRD\b81856ef340f58a1b4ed839bb3c4d52f51e233ecd4ba3521cb4500d9040b0fe8\f128cab0b22fb7e0d9f023d6cdb81309be392d95.cache" />
+    <None Include="GDOT\.godot\shader_cache\ResolveShaderRD\0a9c32be6742d75f51657427891f3458d548940d83948e14526f5d5132cca476\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\ResolveShaderRD\58f0a49dd78b634fc220e42e3eb555084eab1f14099b3f1191905aa95c0a694a\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\SceneForwardClusteredShaderRD\06a4dcb0063cdfa1bfea068d0cf0d1d76e3267552957e88ab1b0e4f763903b7c\0111b66bc05d2e7be4a6f4707fd1bdbcf7535a05.cache" />
+    <None Include="GDOT\.godot\shader_cache\SceneForwardClusteredShaderRD\06a4dcb0063cdfa1bfea068d0cf0d1d76e3267552957e88ab1b0e4f763903b7c\12ebab518252ae4276b8badba1a6fc1b95a33c8b.cache" />
+    <None Include="GDOT\.godot\shader_cache\SceneForwardClusteredShaderRD\06a4dcb0063cdfa1bfea068d0cf0d1d76e3267552957e88ab1b0e4f763903b7c\18d20e2757a0f4ce9b109ae99852f1be6eaa1288.cache" />
+    <None Include="GDOT\.godot\shader_cache\SceneForwardClusteredShaderRD\06a4dcb0063cdfa1bfea068d0cf0d1d76e3267552957e88ab1b0e4f763903b7c\2268f151ef1dca9e12de830ee96448fd3c98d520.cache" />
+    <None Include="GDOT\.godot\shader_cache\SceneForwardClusteredShaderRD\06a4dcb0063cdfa1bfea068d0cf0d1d76e3267552957e88ab1b0e4f763903b7c\2c9cd118e5c7b12c6353b981a1b3d8d3ec947c4a.cache" />
+    <None Include="GDOT\.godot\shader_cache\SceneForwardClusteredShaderRD\06a4dcb0063cdfa1bfea068d0cf0d1d76e3267552957e88ab1b0e4f763903b7c\34a5e28b5a870ad273349f953c5d1224ef2811a7.cache" />
+    <None Include="GDOT\.godot\shader_cache\SceneForwardClusteredShaderRD\06a4dcb0063cdfa1bfea068d0cf0d1d76e3267552957e88ab1b0e4f763903b7c\4a35c33c27d16668bac93996ecb8e3be2a7f4830.cache" />
+    <None Include="GDOT\.godot\shader_cache\SceneForwardClusteredShaderRD\06a4dcb0063cdfa1bfea068d0cf0d1d76e3267552957e88ab1b0e4f763903b7c\54202eec702711805ef2e96464566c5d36cf146f.cache" />
+    <None Include="GDOT\.godot\shader_cache\SceneForwardClusteredShaderRD\06a4dcb0063cdfa1bfea068d0cf0d1d76e3267552957e88ab1b0e4f763903b7c\6c6b12a5e393b3ca55ab7e2b9672a7cf1ad24213.cache" />
+    <None Include="GDOT\.godot\shader_cache\SceneForwardClusteredShaderRD\06a4dcb0063cdfa1bfea068d0cf0d1d76e3267552957e88ab1b0e4f763903b7c\7fb66440f65dac23b75016fc52fb82ae26e9393f.cache" />
+    <None Include="GDOT\.godot\shader_cache\SceneForwardClusteredShaderRD\06a4dcb0063cdfa1bfea068d0cf0d1d76e3267552957e88ab1b0e4f763903b7c\89bcfaacc477a90ca3cd35fca123dad31ee31dc7.cache" />
+    <None Include="GDOT\.godot\shader_cache\SceneForwardClusteredShaderRD\06a4dcb0063cdfa1bfea068d0cf0d1d76e3267552957e88ab1b0e4f763903b7c\9e90053c797fffdb6e38ca23390c7a5507ab0fa3.cache" />
+    <None Include="GDOT\.godot\shader_cache\SceneForwardClusteredShaderRD\06a4dcb0063cdfa1bfea068d0cf0d1d76e3267552957e88ab1b0e4f763903b7c\a2e255ed5160eb89feb9e5de52572875c4569905.cache" />
+    <None Include="GDOT\.godot\shader_cache\SceneForwardClusteredShaderRD\06a4dcb0063cdfa1bfea068d0cf0d1d76e3267552957e88ab1b0e4f763903b7c\bb1180fbd147b6e348c825ef2adb98c6354bd9fb.cache" />
+    <None Include="GDOT\.godot\shader_cache\SceneForwardClusteredShaderRD\06a4dcb0063cdfa1bfea068d0cf0d1d76e3267552957e88ab1b0e4f763903b7c\dd067b9b497e0a08dec1b617ee25e7b2b463c49a.cache" />
+    <None Include="GDOT\.godot\shader_cache\SceneForwardClusteredShaderRD\06a4dcb0063cdfa1bfea068d0cf0d1d76e3267552957e88ab1b0e4f763903b7c\dfe2cd8f6a54d8a4d9cde5047b4dc131c46d8b1d.cache" />
+    <None Include="GDOT\.godot\shader_cache\SceneForwardClusteredShaderRD\06a4dcb0063cdfa1bfea068d0cf0d1d76e3267552957e88ab1b0e4f763903b7c\f342c2c786896028539048028f2388007c962f3c.cache" />
+    <None Include="GDOT\.godot\shader_cache\SceneForwardClusteredShaderRD\79fab011e3917bb76a9bae9fe1f74cb75f547403abbee80f3b06065b707cd018\0111b66bc05d2e7be4a6f4707fd1bdbcf7535a05.cache" />
+    <None Include="GDOT\.godot\shader_cache\SceneForwardClusteredShaderRD\79fab011e3917bb76a9bae9fe1f74cb75f547403abbee80f3b06065b707cd018\0d095702893b024afc9bc3d565044a23d623f01e.cache" />
+    <None Include="GDOT\.godot\shader_cache\SceneForwardClusteredShaderRD\79fab011e3917bb76a9bae9fe1f74cb75f547403abbee80f3b06065b707cd018\12ebab518252ae4276b8badba1a6fc1b95a33c8b.cache" />
+    <None Include="GDOT\.godot\shader_cache\SceneForwardClusteredShaderRD\79fab011e3917bb76a9bae9fe1f74cb75f547403abbee80f3b06065b707cd018\18d20e2757a0f4ce9b109ae99852f1be6eaa1288.cache" />
+    <None Include="GDOT\.godot\shader_cache\SceneForwardClusteredShaderRD\79fab011e3917bb76a9bae9fe1f74cb75f547403abbee80f3b06065b707cd018\219159a2d4b74d835f4ce453ec93324821ff551e.cache" />
+    <None Include="GDOT\.godot\shader_cache\SceneForwardClusteredShaderRD\79fab011e3917bb76a9bae9fe1f74cb75f547403abbee80f3b06065b707cd018\2268f151ef1dca9e12de830ee96448fd3c98d520.cache" />
+    <None Include="GDOT\.godot\shader_cache\SceneForwardClusteredShaderRD\79fab011e3917bb76a9bae9fe1f74cb75f547403abbee80f3b06065b707cd018\2c9cd118e5c7b12c6353b981a1b3d8d3ec947c4a.cache" />
+    <None Include="GDOT\.godot\shader_cache\SceneForwardClusteredShaderRD\79fab011e3917bb76a9bae9fe1f74cb75f547403abbee80f3b06065b707cd018\34a5e28b5a870ad273349f953c5d1224ef2811a7.cache" />
+    <None Include="GDOT\.godot\shader_cache\SceneForwardClusteredShaderRD\79fab011e3917bb76a9bae9fe1f74cb75f547403abbee80f3b06065b707cd018\355113b9ec6fd383b1a155819b9f1971d811b40f.cache" />
+    <None Include="GDOT\.godot\shader_cache\SceneForwardClusteredShaderRD\79fab011e3917bb76a9bae9fe1f74cb75f547403abbee80f3b06065b707cd018\4a35c33c27d16668bac93996ecb8e3be2a7f4830.cache" />
+    <None Include="GDOT\.godot\shader_cache\SceneForwardClusteredShaderRD\79fab011e3917bb76a9bae9fe1f74cb75f547403abbee80f3b06065b707cd018\54202eec702711805ef2e96464566c5d36cf146f.cache" />
+    <None Include="GDOT\.godot\shader_cache\SceneForwardClusteredShaderRD\79fab011e3917bb76a9bae9fe1f74cb75f547403abbee80f3b06065b707cd018\6c6b12a5e393b3ca55ab7e2b9672a7cf1ad24213.cache" />
+    <None Include="GDOT\.godot\shader_cache\SceneForwardClusteredShaderRD\79fab011e3917bb76a9bae9fe1f74cb75f547403abbee80f3b06065b707cd018\7fb66440f65dac23b75016fc52fb82ae26e9393f.cache" />
+    <None Include="GDOT\.godot\shader_cache\SceneForwardClusteredShaderRD\79fab011e3917bb76a9bae9fe1f74cb75f547403abbee80f3b06065b707cd018\89bcfaacc477a90ca3cd35fca123dad31ee31dc7.cache" />
+    <None Include="GDOT\.godot\shader_cache\SceneForwardClusteredShaderRD\79fab011e3917bb76a9bae9fe1f74cb75f547403abbee80f3b06065b707cd018\9e90053c797fffdb6e38ca23390c7a5507ab0fa3.cache" />
+    <None Include="GDOT\.godot\shader_cache\SceneForwardClusteredShaderRD\79fab011e3917bb76a9bae9fe1f74cb75f547403abbee80f3b06065b707cd018\a2e255ed5160eb89feb9e5de52572875c4569905.cache" />
+    <None Include="GDOT\.godot\shader_cache\SceneForwardClusteredShaderRD\79fab011e3917bb76a9bae9fe1f74cb75f547403abbee80f3b06065b707cd018\bb1180fbd147b6e348c825ef2adb98c6354bd9fb.cache" />
+    <None Include="GDOT\.godot\shader_cache\SceneForwardClusteredShaderRD\79fab011e3917bb76a9bae9fe1f74cb75f547403abbee80f3b06065b707cd018\c9c7a68b852d648da8de12950a7456510625714d.cache" />
+    <None Include="GDOT\.godot\shader_cache\SceneForwardClusteredShaderRD\79fab011e3917bb76a9bae9fe1f74cb75f547403abbee80f3b06065b707cd018\dd067b9b497e0a08dec1b617ee25e7b2b463c49a.cache" />
+    <None Include="GDOT\.godot\shader_cache\SceneForwardClusteredShaderRD\79fab011e3917bb76a9bae9fe1f74cb75f547403abbee80f3b06065b707cd018\dfe2cd8f6a54d8a4d9cde5047b4dc131c46d8b1d.cache" />
+    <None Include="GDOT\.godot\shader_cache\SceneForwardClusteredShaderRD\79fab011e3917bb76a9bae9fe1f74cb75f547403abbee80f3b06065b707cd018\f342c2c786896028539048028f2388007c962f3c.cache" />
+    <None Include="GDOT\.godot\shader_cache\ScreenSpaceReflectionFilterShaderRD\18f7974843c6c1944a5e07cf0652295cb8641b20d756eb52d886fa13851fdea6\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\ScreenSpaceReflectionFilterShaderRD\62c632acb8af6edd05cab0ad914e6f0044cb35e76b00ac7552facb6d6074cbc7\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\ScreenSpaceReflectionScaleShaderRD\2af2bc8b94197b84e3058b5457634df40d62f4eec6dd3dd4ed29900fd56e8936\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\ScreenSpaceReflectionScaleShaderRD\c65edce15b32255dee6baffb44500f0f2ebf1e1cad8a012b677bb96f323ea053\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\ScreenSpaceReflectionShaderRD\092d8201454b8548408421a7a9c7ee6d1bccbd20912cde9723ccc71b7a21d80a\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\ScreenSpaceReflectionShaderRD\c05d09f1cc21554be8f3d30c5e3306e4914f297168439c3b9bac239ad9b67d7c\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\SdfgiDebugProbesShaderRD\5da97825942e621a33b4a9ff26f1e4cf3f856a4020c9ccdf4dce21e8250ba0e4\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\SdfgiDebugProbesShaderRD\959002b31fed47ca9a5b6c0b11bf96361845e3f55720e19532809a8efa812014\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\SdfgiDebugShaderRD\a01488285ec6f59c1d08b4674c250bce655fbf1f428f90a1ecd77939005beba0\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\SdfgiDebugShaderRD\ae9ef5d107627cd30e37343391cc669c591753d35bb91081edf717d4a7ac686f\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\SdfgiDirectLightShaderRD\1d0e6782d9d86cb5ea96c4748f26a6dffbf34d4e612916513804b8eba661bd98\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\SdfgiDirectLightShaderRD\c334af86e3e1ce566009508d4353043bfd8412ae0943e524ced15a29211ac8e8\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\SdfgiIntegrateShaderRD\09510bb316f62dd6bcf2b8e1d10bc0813fa79628ac3519f03ecaf62072a06da5\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\SdfgiIntegrateShaderRD\4343435b70eaa710b6a10faa974cfc4e647cf90f2f974531712cd2c6e102434f\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\SdfgiPreprocessShaderRD\07d7fc24de34c5eeb9f09f761f8874a731304c75ce2482ed2b1cb94afe9d2b25\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\SdfgiPreprocessShaderRD\9794356e37ec045a29d412bf235a4ccd7fc01e908fed4b91d8b6fbbb89ab1c7d\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\SkeletonShaderRD\1357328bffdbe4b0394412ee8ad69ab1a7cdbc0f0225ce0521ad33ee4aa248b7\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\SkeletonShaderRD\5bc79b56fbd02388c32316e75281215a279365750e913f9545c532c141ef4083\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\SkyShaderRD\f8aa033d672f3b32b6ceee3b2b3208a9dff0ea44317803c1614fa41e68da40c9\03e3b11c69e24394b2d955a8c0ba85587bb70839.cache" />
+    <None Include="GDOT\.godot\shader_cache\SkyShaderRD\f8aa033d672f3b32b6ceee3b2b3208a9dff0ea44317803c1614fa41e68da40c9\064198c016022615fe6753142c7d0fb63e72359e.cache" />
+    <None Include="GDOT\.godot\shader_cache\SkyShaderRD\f8aa033d672f3b32b6ceee3b2b3208a9dff0ea44317803c1614fa41e68da40c9\30d73e67a87678d23764c9bb22b806795c0e3dcf.cache" />
+    <None Include="GDOT\.godot\shader_cache\SkyShaderRD\f8aa033d672f3b32b6ceee3b2b3208a9dff0ea44317803c1614fa41e68da40c9\5e341807a40df1680aa1db561c90fe1002c781bd.cache" />
+    <None Include="GDOT\.godot\shader_cache\SkyShaderRD\f8aa033d672f3b32b6ceee3b2b3208a9dff0ea44317803c1614fa41e68da40c9\8ff1cb75fe7e72aab2ee40f4669b989cb284bbc7.cache" />
+    <None Include="GDOT\.godot\shader_cache\SkyShaderRD\f8aa033d672f3b32b6ceee3b2b3208a9dff0ea44317803c1614fa41e68da40c9\de678811d1bad3cad4892a8db7b6ea0be197d51d.cache" />
+    <None Include="GDOT\.godot\shader_cache\SkyShaderRD\ffd8681d8ccacc3aaa303cd61a5cb2b744bd56b65dcb873b5ebdcafe46b027a5\03e3b11c69e24394b2d955a8c0ba85587bb70839.cache" />
+    <None Include="GDOT\.godot\shader_cache\SkyShaderRD\ffd8681d8ccacc3aaa303cd61a5cb2b744bd56b65dcb873b5ebdcafe46b027a5\064198c016022615fe6753142c7d0fb63e72359e.cache" />
+    <None Include="GDOT\.godot\shader_cache\SkyShaderRD\ffd8681d8ccacc3aaa303cd61a5cb2b744bd56b65dcb873b5ebdcafe46b027a5\30d73e67a87678d23764c9bb22b806795c0e3dcf.cache" />
+    <None Include="GDOT\.godot\shader_cache\SkyShaderRD\ffd8681d8ccacc3aaa303cd61a5cb2b744bd56b65dcb873b5ebdcafe46b027a5\5e341807a40df1680aa1db561c90fe1002c781bd.cache" />
+    <None Include="GDOT\.godot\shader_cache\SkyShaderRD\ffd8681d8ccacc3aaa303cd61a5cb2b744bd56b65dcb873b5ebdcafe46b027a5\8ff1cb75fe7e72aab2ee40f4669b989cb284bbc7.cache" />
+    <None Include="GDOT\.godot\shader_cache\SkyShaderRD\ffd8681d8ccacc3aaa303cd61a5cb2b744bd56b65dcb873b5ebdcafe46b027a5\de678811d1bad3cad4892a8db7b6ea0be197d51d.cache" />
+    <None Include="GDOT\.godot\shader_cache\SortShaderRD\27f1d1891b6024ce85fe195c58713a42970a690fced236b149643d23c3749a2f\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\SortShaderRD\365858a135f0261661cea03b56b60e31b1391f3b243e68d8b0f0e353bcf96b12\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\SpecularMergeShaderRD\b76c82dfb19813b29f2c8da224470a372a2835e9f7d1a7622c3f4614173f17ab\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\SpecularMergeShaderRD\f6ced94fbb3b2ae37a1ab5646080ee29df6cfd6dfd775904cadd543ca9406cbd\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\SsaoBlurShaderRD\24139c1289092355ec0affec392ffc6bdae7e0bbfecbf357aee52a9d20485853\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\SsaoBlurShaderRD\d3ac4d07a85a3c13e4111e4776d833469d2bf8cba78389b12a521a285b525f6b\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\SsaoImportanceMapShaderRD\69fec498468dcc0228d5d50b8bcca05c7906940d0d860982ef4554912f5922f6\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\SsaoImportanceMapShaderRD\7e0e5ed58bd2405d78a2453857794b15eb8525e16398a3453b9ee0b543fc5cea\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\SsaoInterleaveShaderRD\90869101ee7bcae6371b2b3fcebbe25f8950881928e1e1e92356470af476398d\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\SsaoInterleaveShaderRD\da4e82f1668988a279a118c682096bf59c57b6ee8b5bacf1448fda95286a67fc\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\SsaoShaderRD\2e8e0393a048fc1408b30e421d3cf295f7cf3edb1a007990c85965f672e1eb11\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\SsaoShaderRD\fa9520bdf5b70499520ea511a2d439dd68ad039b9b50b5accc3808cbda2670a1\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\SsEffectsDownsampleShaderRD\7c1d67dab9c1bfa45d6d8f025dd40e61c2e82fbf918c89f856daa3287a0ceeb4\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\SsEffectsDownsampleShaderRD\cac895aeffb6c72e6bdb85371d326c51f58ed267749b94fdaffd7ee77002829d\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\SsilBlurShaderRD\0c8a8e7dbc272dd1edfe04d571eb307dbb558c3abade6d636583a1d7d3f00831\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\SsilBlurShaderRD\b7ef38eb13c511b6c6a6b5af18b16414af5ad704a36dea28f9482f6bf0bc7671\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\SsilImportanceMapShaderRD\0504b36b7181f89a8c53bbda79eee4cb4576250bb4d97ce2c5654852abb3a830\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\SsilImportanceMapShaderRD\6307b846ff76cc04cfca59521d358e90a1cdabcf36687497bfc732201f93477a\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\SsilInterleaveShaderRD\54457c9e068c537814023e6c7e3dc505be71cd6d7a61a50339994489476ec42d\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\SsilInterleaveShaderRD\f74c12c04f474679e76430ee770ab85ca3b5bc721e738627b63899e028770ecf\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\SsilShaderRD\6aa744715a92a1d566683ac90fe2f4ab8b6595f2ce65e1cb1da5e057dce52b7c\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\SsilShaderRD\f6159197357613961e59ab65d45ef5e1e31726cffd0dbb0673fbffc9bcfb09d0\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\SubsurfaceScatteringShaderRD\2741d626a8db62d5358d71093c7c82242067787f6e1a3a7a369f0403c87002be\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\SubsurfaceScatteringShaderRD\d65c0e54bd8f42c7525a925afb7df7aae00780f7e599aa508901d8f2a561463f\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\TaaResolveShaderRD\0c205194915ed0abe5b85dde91d08d485d7762e2b12cf4d27876c417589074c9\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\TaaResolveShaderRD\482669d559b6198fa6f1bf957cec276f78929460181c52c904546425ce860410\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\TonemapShaderRD\02dad6c023b394b029967e55c21597d0f37db0e69d53c2478a01e2134e7b6248\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\TonemapShaderRD\f6fd13628837d627adc0f2d46b44e8bd99dbdc2bd801b12973f400cd5a0856d4\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\VolumetricFogProcessShaderRD\02d08760cb446f0de2aa75f06d58e8fa53fd4cfeb620fa5657e58cafc24dd5d1\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\VolumetricFogProcessShaderRD\4772f9b2b412807c9735d21b620fb0c539e6a3746e4d7e4b64879de2439af5d4\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\VolumetricFogShaderRD\1cfa5a2340aa6e46b28abe007996f8073bb9096afa2e4313d3a9b6f5db04d5d3\9a227745af2d65830f930370a9fbba551fbd6f60.cache" />
+    <None Include="GDOT\.godot\shader_cache\VolumetricFogShaderRD\3df4cff9930877756f500f9867225ecceccc82614df8b533d4e5dcd9d2a2cea4\9a227745af2d65830f930370a9fbba551fbd6f60.cache" />
+    <None Include="GDOT\.godot\shader_cache\VoxelGiDebugShaderRD\3770eb05d4ce06b42fbc563f56ae05497428b110986b92715eb9639468f3e8f0\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\VoxelGiDebugShaderRD\f677c1568e7f5cc362224f5e6f6deece4a59b22c3979ebc342db4566e5f112d4\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\VoxelGiShaderRD\687c09b643b128a48d92c4a87379ebfec3b2ac6dc51034c8c04819a46fc81f55\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\shader_cache\VoxelGiShaderRD\ffafcc77162e25e884b898e96f3c10079fa8686aade05b4417341a15804e9de9\087916079fba7c625e62b0c2cca570e0fb87c99a.cache" />
+    <None Include="GDOT\.godot\uid_cache.bin" />
+    <None Include="GDOT\Astrogation.tscn" />
+    <None Include="GDOT\FreecamScript.gd" />
+    <None Include="GDOT\icon.svg.import" />
+    <None Include="GDOT\Prefabs\SOIbasic.tres" />
+    <None Include="GDOT\project.godot" />
+    <None Include="GDOT\Scripts\LineDraw_Executable.gd" />
+    <None Include="GDOT\UC_V3.csproj" />
+    <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include=".git\ms-persist.xml" />
+    <Content Include="GDOT\.godot\mono\metadata\ide_messaging_meta.txt" />
+    <Content Include="GDOT\.godot\mono\temp\bin\Debug\GodotSharp.dll" />
+    <Content Include="GDOT\.godot\mono\temp\bin\Debug\GodotSharpEditor.dll" />
+    <Content Include="GDOT\.godot\mono\temp\bin\Debug\UC_V3.dll" />
+    <Content Include="GDOT\.godot\mono\temp\bin\Debug\UC_V3.pdb" />
+    <Content Include="GDOT\.godot\mono\temp\obj\Debug\refint\UC_V3.dll" />
+    <Content Include="GDOT\.godot\mono\temp\obj\Debug\ref\UC_V3.dll" />
+    <Content Include="GDOT\.godot\mono\temp\obj\Debug\UC_V3.csproj.FileListAbsolute.txt" />
+    <Content Include="GDOT\.godot\mono\temp\obj\Debug\UC_V3.dll" />
+    <Content Include="GDOT\.godot\mono\temp\obj\Debug\UC_V3.pdb" />
+    <Content Include="GDOT\icon.svg" />
+    <Content Include="GDOT\UC_V3.sln" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include=".git\objects\info\" />
+    <Folder Include=".git\refs\tags\" />
+    <Folder Include=".vs\AP_Project\v17\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
+  <ProjectExtensions>
+    <VisualStudio AllowExistingFolder="true" />
+  </ProjectExtensions>
+</Project>

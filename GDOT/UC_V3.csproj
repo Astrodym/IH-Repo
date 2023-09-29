@@ -1,9 +1,6 @@
-<Project Sdk="Godot.NET.Sdk/4.1.1">
+﻿<Project Sdk="Godot.NET.Sdk/4.1.1">
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <EnableDynamicLoading>true</EnableDynamicLoading>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="D:\AstroProp_09192023.cs" Link="AstroProp_09192023.cs" />
-  </ItemGroup>
 </Project>
