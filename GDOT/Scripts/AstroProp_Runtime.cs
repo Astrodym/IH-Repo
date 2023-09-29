@@ -22,8 +22,9 @@ public partial class AstroProp_Runtime : Node3D
 {
     public class SegmentStepFrame
     {
-        public Double MET = 0;
+        public double MET = 0;
 
+        public Node3D ObjectRef;
         public class StateVectors
         {
             public Godot.Vector3 PosCartesian = new Godot.Vector3();
@@ -34,7 +35,7 @@ public partial class AstroProp_Runtime : Node3D
             //noballs variable lmao:
             public Godot.Vector3 InstantaneousAccel = new Godot.Vector3(); // Instantaneous propulsion by engines to be considered by ship
         }
-
+        public double DeltaV;
 
         public string Event1; // misc register name
         public string Event2;
@@ -49,6 +50,7 @@ public partial class AstroProp_Runtime : Node3D
         public string Name;
         public string Description;
 
+        public double StartFrame;
         // public ObjectRef = GetNode<Spatial>("%MyUniqueNodeName");
 
         public Node3D ObjectRef;
@@ -161,7 +163,7 @@ public partial class AstroProp_Runtime : Node3D
             public static double MET = 0; //mean elapsed time
 
             public static double RandomAssConstant = 8.4;
-            public static double TimeCompression = 1; //100000; // default is 1, 2548800 is 1 lunar month per second
+            public static double TimeCompression = 10000; //100000; // default is 1, 2548800 is 1 lunar month per second
 
             public static double DegToRads = Math.PI / 180;
         };
@@ -436,6 +438,7 @@ public partial class AstroProp_Runtime : Node3D
 
         double SMA = -(SOI_Mu*Distance)/(Distance*Relative_Vel-2*SOI_Mu);
         double Period = 2 * System.Math.PI * System.Math.Sqrt(Math.Pow(SMA, 3)/SOI_Mu);
+
         return SMA;
     }
     public void MoveCelestial(CelestialRender SOI, double MET)

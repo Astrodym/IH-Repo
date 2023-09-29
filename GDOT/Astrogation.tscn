@@ -1,8 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://m72oaa82j0x7"]
+[gd_scene load_steps=8 format=3 uid="uid://m72oaa82j0x7"]
 
 [ext_resource type="SphereMesh" uid="uid://hvpsax33j75w" path="res://Prefabs/SOIbasic.tres" id="1_dh6yw"]
 [ext_resource type="Script" path="res://Scripts/AstroProp_Runtime.cs" id="1_o5ibn"]
-[ext_resource type="Script" path="res://Scripts/new_script.cs" id="2_5rxlw"]
 [ext_resource type="Script" path="res://FreecamScript.gd" id="4_fh5v0"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4inap"]
@@ -25,7 +24,6 @@ script = ExtResource("1_o5ibn")
 [node name="Moon" type="Node3D" parent="Global"]
 editor_description = "This is a test to discover if the nodepath even fucking works"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.85969, 0, -13.5365)
-script = ExtResource("2_5rxlw")
 
 [node name="Moon" type="MeshInstance3D" parent="Global/Moon"]
 transform = Transform3D(2.73, 0, 0, 0, 2.73, 0, 0, 0, 2.73, 0, 0, 0)
@@ -61,3 +59,4 @@ camera_attributes = SubResource("CameraAttributesPractical_1wmyw")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.996849, 0, 0.0793289, 0, 1, 0, -0.0793289, 0, -0.996849, 0, 0, 0)
 light_energy = 3.1
+shadow_enabled = true
