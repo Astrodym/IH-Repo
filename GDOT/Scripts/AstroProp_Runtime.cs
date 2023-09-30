@@ -1,6 +1,6 @@
 // Jonathan C. Ross 
 // 09 01 2023 
-// All Rights Reserved
+
 
 // Fuck you, Unity.
 
