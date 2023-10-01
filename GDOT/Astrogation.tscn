@@ -46,25 +46,26 @@ skeleton = NodePath("../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_4inap")
 
 [node name="Sagitta" type="Node3D" parent="Global"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.8452, 0, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Global/Sagitta"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -21.9251)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0709448, -0.0563674, -0.00319767)
 mesh = ExtResource("1_dh6yw")
 surface_material_override/0 = SubResource("StandardMaterial3D_q8tf5")
 
 [node name="TrackBasic" type="Node3D" parent="Global"]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Global/TrackBasic"]
-transform = Transform3D(1, 0, 0, 0, 0.666051, 0.745906, 0, -0.745906, 0.666051, 0, 0, -12.3248)
+[node name="SegmentBasic" type="MeshInstance3D" parent="Global/TrackBasic"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.00996208, -0.0805702, 0.079958)
+cast_shadow = 0
+extra_cull_margin = 1654.95
 mesh = SubResource("PlaneMesh_cncih")
 surface_material_override/0 = SubResource("ShaderMaterial_h30fx")
-metadata/StartPos = Vector3(0, 0, 0)
-metadata/EndPos = Vector3(0, 0, 0)
 
 [node name="Local" type="Node3D" parent="."]
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.296575, 0, 0.95501, 0, 1, 0, -0.95501, 0, 0.296575, 163.73, 4.88673, 46.4968)
+transform = Transform3D(0.296575, 0, 0.95501, 0, 1, 0, -0.95501, 0, 0.296575, 5.79629, 2.01142, -9.03228)
 current = true
 script = ExtResource("4_fh5v0")
 
