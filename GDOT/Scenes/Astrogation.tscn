@@ -1,9 +1,9 @@
 [gd_scene load_steps=11 format=3 uid="uid://m72oaa82j0x7"]
 
-[ext_resource type="SphereMesh" uid="uid://hvpsax33j75w" path="res://Prefabs/SOIbasic.tres" id="1_dh6yw"]
-[ext_resource type="Script" path="res://Scripts/AstroProp_Runtime.cs" id="1_o5ibn"]
-[ext_resource type="Shader" path="res://TrackBasic.gdshader" id="3_cqlef"]
-[ext_resource type="Script" path="res://FreecamScript.gd" id="4_fh5v0"]
+[ext_resource type="Script" path="res://Scripts/AstroProp_Runtime.cs" id="1_ls8gs"]
+[ext_resource type="SphereMesh" uid="uid://hvpsax33j75w" path="res://Prefabs/SOIbasic.tres" id="2_spuk8"]
+[ext_resource type="Shader" path="res://TrackBasic.gdshader" id="3_bidwo"]
+[ext_resource type="Script" path="res://FreecamScript.gd" id="4_s6vb3"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4inap"]
 albedo_color = Color(0.411765, 0.627451, 0.984314, 1)
@@ -15,7 +15,7 @@ albedo_color = Color(1, 0.219608, 0.0784314, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_h30fx"]
 render_priority = 0
-shader = ExtResource("3_cqlef")
+shader = ExtResource("3_bidwo")
 
 [sub_resource type="Environment" id="Environment_tpq1j"]
 background_mode = 1
@@ -24,7 +24,7 @@ ambient_light_source = 2
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_1wmyw"]
 
 [node name="Astrogation" type="Node3D"]
-script = ExtResource("1_o5ibn")
+script = ExtResource("1_ls8gs")
 
 [node name="Global" type="Node3D" parent="."]
 
@@ -34,14 +34,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.85969, 0, -13.5365)
 
 [node name="Moon" type="MeshInstance3D" parent="Global/Moon"]
 transform = Transform3D(2.73, 0, 0, 0, 2.73, 0, 0, 0, 2.73, 0, 0, 0)
-mesh = ExtResource("1_dh6yw")
+mesh = ExtResource("2_spuk8")
 skeleton = NodePath("../../..")
 
 [node name="Earth" type="Node3D" parent="Global"]
 
 [node name="Earth" type="MeshInstance3D" parent="Global/Earth"]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
-mesh = ExtResource("1_dh6yw")
+mesh = ExtResource("2_spuk8")
 skeleton = NodePath("../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_4inap")
 
@@ -49,7 +49,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_4inap")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Global/Sagitta"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -21.9251)
-mesh = ExtResource("1_dh6yw")
+mesh = ExtResource("2_spuk8")
 surface_material_override/0 = SubResource("StandardMaterial3D_q8tf5")
 
 [node name="TrackBasic" type="Node3D" parent="Global"]
@@ -66,7 +66,7 @@ metadata/EndPos = Vector3(0, 0, 0)
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.296575, 0, 0.95501, 0, 1, 0, -0.95501, 0, 0.296575, 163.73, 4.88673, 46.4968)
 current = true
-script = ExtResource("4_fh5v0")
+script = ExtResource("4_s6vb3")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_tpq1j")
