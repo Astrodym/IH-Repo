@@ -1,9 +1,12 @@
 shader_type spatial;
+render_mode cull_disabled;
 
-uniform vec3 StartPos = vec3(3,10,0);
-uniform vec3 EndPos = vec3(-3,10,0);
+uniform vec3 StartPos = vec3(0,10,3);
+uniform vec3 EndPos = vec3(1,10,0);
 
-uniform float LineThickness = .00001;
+
+
+uniform float LineThickness = .001;
 
 uniform vec3 Color = vec3(0,0,1);
 //const StartPos = get_meta("StartPos");
@@ -12,8 +15,10 @@ vec3 YieldCross(vec3 CameraPos,vec3 PointPos,vec3 TerminalPos){
 	vec3 CameraToVector = CameraPos-PointPos;
 	vec3 InlineVector = TerminalPos-PointPos;
 	
-	//float CTVMag = sqrt(pow(CameraToVector.x,2) + pow(CameraToVector.y,2) + pow(CameraToVector.z,2));
-	
+	float CTVMag = sqrt(pow(CameraToVector.x,2) + pow(CameraToVector.y,2) + pow(CameraToVector.z,2));
+	float IVMag = sqrt(pow(CameraToVector.x,2) + pow(CameraToVector.y,2) + pow(CameraToVector.z,2));
+	CameraToVector = CameraToVector/CTVMag;
+	InlineVector = InlineVector/IVMag;
 	//CameraToVector = CameraToVector/CTVMag;
 	
 	//CameraToVector.x = CameraToVector.x/CTVMag;
@@ -31,7 +36,7 @@ vec3 YieldCross(vec3 CameraPos,vec3 PointPos,vec3 TerminalPos){
 	
 	float CrossMag = sqrt(pow(Cross.x,2) + pow(Cross.y,2) + pow(Cross.z,2));
 	//sqrt((Cross.x^2 + Cross.y^2 + Cross.z^2));
-	//Cross = Cross/CrossMag;
+	Cross = Cross/CrossMag;
 	vec3 ReturnCross = Cross;
 	
 	return ReturnCross;
@@ -48,9 +53,21 @@ void vertex() {
 		float CTVMag = sqrt(pow(CameraToVector.x,2) + pow(CameraToVector.y,2) + pow(CameraToVector.z,2));
 
 		float Coefficient = (LineThickness*CTVMag);
-		vec3 NewPos = StartPos+(Cross*Coefficient);
+		vec3 NewPos = StartPos;//+(Cross*Coefficient);
 		VERTEX.x = NewPos.x;
-		VERTEX.y = NewPos.y;
+		VERTEX.y = NewPos.y+LineThickness/2.0;
+		VERTEX.z = NewPos.z;
+	}
+	//here comes the debug
+	if (VERTEX_ID == 2){
+		vec3 Cross = YieldCross(CAMERA_POSITION_WORLD,StartPos,EndPos);
+		vec3 CameraToVector = StartPos-CAMERA_POSITION_WORLD;
+		float CTVMag = sqrt(pow(CameraToVector.x,2) + pow(CameraToVector.y,2) + pow(CameraToVector.z,2));
+
+		float Coefficient = (LineThickness*CTVMag);
+		vec3 NewPos = StartPos;//-(Cross*Coefficient);
+		VERTEX.x = NewPos.x;
+		VERTEX.y = NewPos.y-LineThickness/2.0;
 		VERTEX.z = NewPos.z;
 	}
 	if (VERTEX_ID == 1){
@@ -59,31 +76,21 @@ void vertex() {
 		float CTVMag = sqrt(pow(CameraToVector.x,2) + pow(CameraToVector.y,2) + pow(CameraToVector.z,2));
 
 		float Coefficient = (LineThickness*CTVMag);
-		vec3 NewPos = EndPos-(Cross*Coefficient);
+		vec3 NewPos = EndPos;//+(Cross*Coefficient);
 		VERTEX.x = NewPos.x;
-		VERTEX.y = NewPos.y;
+		VERTEX.y = NewPos.y+LineThickness/2.0;
 		VERTEX.z = NewPos.z;
 	}
-	if (VERTEX_ID == 2){
-			vec3 Cross = YieldCross(CAMERA_POSITION_WORLD,StartPos,EndPos);
-			vec3 CameraToVector = StartPos-CAMERA_POSITION_WORLD;
-			float CTVMag = sqrt(pow(CameraToVector.x,2) + pow(CameraToVector.y,2) + pow(CameraToVector.z,2));
-
-			float Coefficient = (LineThickness*CTVMag);
-			vec3 NewPos = StartPos-(Cross*Coefficient);
-			VERTEX.x = NewPos.x;
-			VERTEX.y = NewPos.y;
-			VERTEX.z = NewPos.z;
-	}
+	//here comes the debug
 	if (VERTEX_ID == 3){
 		vec3 Cross = YieldCross(CAMERA_POSITION_WORLD,EndPos,StartPos);
 		vec3 CameraToVector = EndPos-CAMERA_POSITION_WORLD;
 		float CTVMag = sqrt(pow(CameraToVector.x,2) + pow(CameraToVector.y,2) + pow(CameraToVector.z,2));
 
 		float Coefficient = (LineThickness*CTVMag);
-		vec3 NewPos = EndPos+(Cross*Coefficient);
+		vec3 NewPos = EndPos;//-(Cross*Coefficient);
 		VERTEX.x = NewPos.x;
-		VERTEX.y = NewPos.y;
+		VERTEX.y = NewPos.y-LineThickness/2.0;
 		VERTEX.z = NewPos.z;
 	}
 }
@@ -92,6 +99,8 @@ void fragment() {
 	// Place fragment code here.
 	ALBEDO = Color;
 	EMISSION = Color;
+	
+	
 	// set_vertex( int indx, Vector3 vertex )
 	
 	//vec3 StartPos =  

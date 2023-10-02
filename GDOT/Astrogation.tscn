@@ -18,7 +18,7 @@ shader = ExtResource("3_cqlef")
 shader_parameter/StartPos = Vector3(3, 10, 0)
 shader_parameter/EndPos = Vector3(-3, 10, 0)
 shader_parameter/LineThickness = 1.0
-shader_parameter/Color = Vector3(0, 0, 1)
+shader_parameter/Color = Vector3(1, 0, 1)
 
 [sub_resource type="Environment" id="Environment_tpq1j"]
 background_mode = 1
@@ -59,6 +59,9 @@ surface_material_override/0 = SubResource("StandardMaterial3D_q8tf5")
 [node name="TrackBasic" type="Node3D" parent="Global"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Global/TrackBasic"]
+cast_shadow = 0
+extra_cull_margin = 8440.24
+ignore_occlusion_culling = true
 mesh = ExtResource("3_yje6v")
 surface_material_override/0 = SubResource("ShaderMaterial_4oenq")
 
