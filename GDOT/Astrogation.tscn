@@ -17,7 +17,7 @@ render_priority = 0
 shader = ExtResource("3_cqlef")
 shader_parameter/StartPos = Vector3(3, 10, 0)
 shader_parameter/EndPos = Vector3(-3, 10, 0)
-shader_parameter/LineThickness = 1.0
+shader_parameter/LineThickness = 0.025
 shader_parameter/Color = Vector3(1, 0, 1)
 
 [sub_resource type="Environment" id="Environment_tpq1j"]

@@ -53,7 +53,7 @@ void vertex() {
 		float CTVMag = sqrt(pow(CameraToVector.x,2) + pow(CameraToVector.y,2) + pow(CameraToVector.z,2));
 
 		float Coefficient = (LineThickness*CTVMag);
-		vec3 NewPos = StartPos;//+(Cross*Coefficient);
+		vec3 NewPos = StartPos+(Cross*Coefficient);
 		VERTEX.x = NewPos.x;
 		VERTEX.y = NewPos.y+LineThickness/2.0;
 		VERTEX.z = NewPos.z;
@@ -65,7 +65,7 @@ void vertex() {
 		float CTVMag = sqrt(pow(CameraToVector.x,2) + pow(CameraToVector.y,2) + pow(CameraToVector.z,2));
 
 		float Coefficient = (LineThickness*CTVMag);
-		vec3 NewPos = StartPos;//-(Cross*Coefficient);
+		vec3 NewPos = StartPos-(Cross*Coefficient);
 		VERTEX.x = NewPos.x;
 		VERTEX.y = NewPos.y-LineThickness/2.0;
 		VERTEX.z = NewPos.z;
@@ -76,7 +76,7 @@ void vertex() {
 		float CTVMag = sqrt(pow(CameraToVector.x,2) + pow(CameraToVector.y,2) + pow(CameraToVector.z,2));
 
 		float Coefficient = (LineThickness*CTVMag);
-		vec3 NewPos = EndPos;//+(Cross*Coefficient);
+		vec3 NewPos = EndPos+(Cross*Coefficient);
 		VERTEX.x = NewPos.x;
 		VERTEX.y = NewPos.y+LineThickness/2.0;
 		VERTEX.z = NewPos.z;
@@ -88,7 +88,7 @@ void vertex() {
 		float CTVMag = sqrt(pow(CameraToVector.x,2) + pow(CameraToVector.y,2) + pow(CameraToVector.z,2));
 
 		float Coefficient = (LineThickness*CTVMag);
-		vec3 NewPos = EndPos;//-(Cross*Coefficient);
+		vec3 NewPos = EndPos-(Cross*Coefficient);
 		VERTEX.x = NewPos.x;
 		VERTEX.y = NewPos.y-LineThickness/2.0;
 		VERTEX.z = NewPos.z;
