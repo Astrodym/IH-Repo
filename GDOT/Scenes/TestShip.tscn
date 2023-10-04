@@ -1,8 +1,7 @@
 [gd_scene load_steps=2 format=3 uid="uid://ipjor5in02tr"]
 
-[ext_resource type="ArrayMesh" uid="uid://bg4j6e4qy3axg" path="res://OBJ Files/Ship Placeholder.obj" id="1_b5e7p"]
+[ext_resource type="PackedScene" uid="uid://bjds6y7i2gwqk" path="res://Blend Files/Ship Placeholder.blend" id="1_uxbs3"]
 
 [node name="Node3D" type="Node3D"]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = ExtResource("1_b5e7p")
+[node name="Ship Placeholder" parent="." instance=ExtResource("1_uxbs3")]
