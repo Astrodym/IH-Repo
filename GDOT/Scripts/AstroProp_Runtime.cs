@@ -42,14 +42,15 @@ public partial class AstroProp_Runtime : Node3D
 
         // PosCartesian = PosCartesian * (float)ScaleConversion("ToRealUnits"); do this when calling le function
 
-
+        GD.Print(PosCartesian);
         Godot.Vector3 x1 = PosCartesian + VelCartesian * (float)(c1 * Reference.Dynamics.TimeStep);
         Godot.Vector3 a1 = new Godot.Vector3();
-        GravityMain_SOI(x1, MET, a1);
+        GravityMain_SOI(x1, MET, ref a1);
         foreach (var CelestialRender in KeplerContainers)
         {
             Godot.Vector3 TempAccel = new Godot.Vector3();
-            GravityGradient(CelestialRender, x1, MET, TempAccel);
+            GravityGradient(CelestialRender, x1, MET, ref TempAccel);
+            //GD.Print(TempAccel);
             a1 += TempAccel;
             //Debug.Log(CelestialRender.Name.ToString());
         }
@@ -57,13 +58,13 @@ public partial class AstroProp_Runtime : Node3D
 
         Godot.Vector3 v1 = VelCartesian + (float)(d1) * a1 * (float)Reference.Dynamics.TimeStep;
         Godot.Vector3 x2 = x1 + (float)c2 * v1 * (float)Reference.Dynamics.TimeStep;
-
+        
         Godot.Vector3 a2 = new Godot.Vector3();
-        GravityMain_SOI(x2, MET, a2);
+        GravityMain_SOI(x2, MET, ref a2);
         foreach (var CelestialRender in KeplerContainers)
         {
             Godot.Vector3 TempAccel = new Godot.Vector3();
-            GravityGradient(CelestialRender, x2, MET, TempAccel);
+            GravityGradient(CelestialRender, x2, MET, ref TempAccel);
             a2 += TempAccel;
             //Debug.Log(CelestialRender.Name.ToString());
         }
@@ -73,11 +74,11 @@ public partial class AstroProp_Runtime : Node3D
         Godot.Vector3 x3 = x2 + (float)c3 * v2 * (float)Reference.Dynamics.TimeStep;
 
         Godot.Vector3 a3 = new Godot.Vector3();
-        GravityMain_SOI(x3, MET, a3);
+        GravityMain_SOI(x3, MET, ref a3);
         foreach (var CelestialRender in KeplerContainers)
         {
             Godot.Vector3 TempAccel = new Godot.Vector3();
-            GravityGradient(CelestialRender, x3, MET, TempAccel);
+            GravityGradient(CelestialRender, x3, MET, ref TempAccel);
             a3 += TempAccel;
             //Debug.Log(CelestialRender.Name.ToString());
         }
@@ -87,7 +88,7 @@ public partial class AstroProp_Runtime : Node3D
         Godot.Vector3 x4 = x3 + (float)c4 * v3 * (float)Reference.Dynamics.TimeStep;
 
         Godot.Vector3 v4 = v3;
-
+        //GD.Print(v4 * (float)ScaleConversion("ToUnityUnits"));
         PosCartesian = x4;
         VelCartesian = v4;
     }
@@ -329,7 +330,7 @@ public partial class AstroProp_Runtime : Node3D
             public static double MET = 0; //mean elapsed time
 
             public static double RandomAssConstant = 8.4;
-            public static double TimeCompression = 10000; //100000; // default is 1, 2548800 is 1 lunar month per second
+            public static double TimeCompression = 1; //100000; // default is 1, 2548800 is 1 lunar month per second
 
             public static double DegToRads = Math.PI / 180;
         };
@@ -445,7 +446,7 @@ public partial class AstroProp_Runtime : Node3D
 
 
     }
-    public void GravityMain_SOI(Godot.Vector3 PosCartesian, double MET_Frame, Godot.Vector3 Acceleration)
+    public void GravityMain_SOI(Godot.Vector3 PosCartesian, double MET_Frame, ref Godot.Vector3 Acceleration)
     {
 
 
@@ -460,25 +461,17 @@ public partial class AstroProp_Runtime : Node3D
 
         Godot.Vector3 FromProjToSOI = SOI_PosCartesian - PosCartesian;
 
-        double DistanceExponent = FromProjToSOI.Length() * Math.Exp(2);
+        double DistanceExponent = Math.Pow(FromProjToSOI.Length(), 2);
 
-        Godot.Vector3 GravityUnit = new Godot.Vector3(
-            FromProjToSOI.X / FromProjToSOI.Length(),
-            FromProjToSOI.Y / FromProjToSOI.Length(),
-            FromProjToSOI.Z / FromProjToSOI.Length()
-        );
+        Godot.Vector3 GravityUnit = FromProjToSOI / FromProjToSOI.Length();
 
         double GravityAccelerant = (Reference.SOI.MainReference.GravitationalParameter / DistanceExponent);
 
-        Acceleration = new Godot.Vector3(
-            (float)(FromProjToSOI.X * GravityAccelerant),
-            (float)(FromProjToSOI.Y * GravityAccelerant),
-            (float)(FromProjToSOI.Z * GravityAccelerant)
-        );
+        Acceleration = GravityUnit * (float)GravityAccelerant;
 
         // return FromProjToSOI;
     }
-    public void GravityGradient(CelestialRender SOI, Godot.Vector3 PosCartesian, double MET_Frame, Godot.Vector3 Acceleration)
+    public void GravityGradient(CelestialRender SOI, Godot.Vector3 PosCartesian, double MET_Frame, ref Godot.Vector3 Acceleration)
     {
 
 
@@ -492,23 +485,16 @@ public partial class AstroProp_Runtime : Node3D
 
 
 
-        Godot.Vector3 FromProjToSOI = SOI_PosCartesian - PosCartesian;
+        Godot.Vector3 FromProjToSOI = (SOI_PosCartesian - PosCartesian);
+        
 
-        double DistanceExponent = FromProjToSOI.Length() * Math.Exp(2);
+        double DistanceExponent = Math.Pow(FromProjToSOI.Length() ,2);
 
-        Godot.Vector3 GravityUnit = new Godot.Vector3(
-            FromProjToSOI.X / FromProjToSOI.Length(),
-            FromProjToSOI.Y / FromProjToSOI.Length(),
-            FromProjToSOI.Z / FromProjToSOI.Length()
-        );
+        Godot.Vector3 GravityUnit = FromProjToSOI / FromProjToSOI.Length();
 
-        double GravityAccelerant = (SOI.GravitationalParameter / DistanceExponent);
+        double GravityAccelerant = (Reference.SOI.MainReference.GravitationalParameter / DistanceExponent);
 
-        Acceleration = new Godot.Vector3(
-            (float)(FromProjToSOI.X * GravityAccelerant),
-            (float)(FromProjToSOI.Y * GravityAccelerant),
-            (float)(FromProjToSOI.Z * GravityAccelerant)
-        );
+        Acceleration = GravityUnit * (float)GravityAccelerant;
 
         // return FromProjToSOI;
     }
@@ -566,7 +552,7 @@ public partial class AstroProp_Runtime : Node3D
 
         Godot.Vector3 PosCartesian = Object.StateVectors.PosCartesian;
         Godot.Vector3 VelCartesian = Object.StateVectors.VelCartesian;
-        double MET_Frame = MET;
+        //double MET_Frame = MET;
 
         SY4(ref PosCartesian, ref VelCartesian, Object.StateVectors.InstantaneousAccel, MET);
 
@@ -685,7 +671,7 @@ public partial class AstroProp_Runtime : Node3D
             Godot.Vector3 LerpV3 = NBodyAffected.StateVectors.NextPosLerp - NBodyAffected.StateVectors.PosCartesian;
 
             NBodyAffected.ObjectRef.Position = NBodyAffected.StateVectors.PosCartesian + LerpV3 * LerpFloat;
-            
+            //GD.Print(NBodyAffected.StateVectors.PosCartesian);
             //Debug.Log(CelestialRender.Name.ToString());
         }
 
