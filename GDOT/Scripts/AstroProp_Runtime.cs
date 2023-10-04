@@ -139,6 +139,7 @@ public partial class AstroProp_Runtime : Node3D
             bool PredictNextPosLerp
            )
         {
+            this.MET = MET;
             //  this.PosCartesian;
             this.PosCartesian = Prev_Pos;
             this.VelCartesian = Prev_Vel;
@@ -561,19 +562,20 @@ public partial class AstroProp_Runtime : Node3D
 
     public void MoveNBy(NBodyAffected Object, double MET)
     {
+        float LocalScale = (float)ScaleConversion("ToUnityUnits");
+
         Godot.Vector3 PosCartesian = Object.StateVectors.PosCartesian;
         Godot.Vector3 VelCartesian = Object.StateVectors.VelCartesian;
         double MET_Frame = MET;
 
         SY4(ref PosCartesian, ref VelCartesian, Object.StateVectors.InstantaneousAccel, MET);
 
-        double LocalScale = ScaleConversion("ToUnityUnits");
+       
         // LocalScale = (float)(LocalScale);
 
-        PosCartesian = new Godot.Vector3((float)(PosCartesian.X * LocalScale), (float)(PosCartesian.Y * LocalScale), (float)(PosCartesian.Z * LocalScale));
-
+        
         // SOI.ObjectRef.Translate(PosCartesian);
-        Object.ObjectRef.Position = (PosCartesian);
+        Object.ObjectRef.Position = (new Godot.Vector3((float)(PosCartesian.X * LocalScale), (float)(PosCartesian.Y * LocalScale), (float)(PosCartesian.Z * LocalScale)));
 
 
         Object.StateVectors.PosCartesian = PosCartesian;
@@ -615,7 +617,7 @@ public partial class AstroProp_Runtime : Node3D
                                                                         //KeplerContainers.Clear();
         KeplerContainers.Add(new CelestialRender(
             "Moon",
-            "Our second closest rock",
+            "Our closest rock",
             GetNode<Node3D>("Global/Moon"),
             7.35 * System.Math.Pow(10, 22),
             4.904 * System.Math.Pow(10, 12),
@@ -632,9 +634,9 @@ public partial class AstroProp_Runtime : Node3D
             GetNode<Node3D>("Global/Sagitta"),
             "Sagitta",
             "a dumbfuck",
-            new Godot.Vector3(1000000,0,0),
-            new Godot.Vector3(9000, 0, 0),
-            new Godot.Vector3(000, 0, 0)
+            new Godot.Vector3(6789000, 0,0), //iss altitude meters
+            new Godot.Vector3(6576, 0, 0), //iss velocity m/s
+            new Godot.Vector3(0, 0, 0) // zero propulsion
 
 
         ));
