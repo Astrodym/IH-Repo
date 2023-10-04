@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dpmrxocdnlob2"
+path="res://.godot/imported/SlicePlaneMesh.obj-9c1054e9a5fdf4f3decf81aaa2cd4fba.mesh"
+
+[deps]
+
+files=["res://.godot/imported/SlicePlaneMesh.obj-9c1054e9a5fdf4f3decf81aaa2cd4fba.mesh"]
+
+source_file="res://Prefabs/SlicePlaneMesh.obj"
+dest_files=["res://.godot/imported/SlicePlaneMesh.obj-9c1054e9a5fdf4f3decf81aaa2cd4fba.mesh", "res://.godot/imported/SlicePlaneMesh.obj-9c1054e9a5fdf4f3decf81aaa2cd4fba.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

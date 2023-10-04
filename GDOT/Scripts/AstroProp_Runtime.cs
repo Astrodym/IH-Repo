@@ -4,7 +4,11 @@
 
 // Fuck you, Unity.
 
+// Hello, welcome to the math 
+// If you're coming from Unity, you will have a problem assigning references to nodes in the code
+// If you need to set a reference at runtime, simply leave the global variable empty and assign it in the 'Ready()' function
 
+// Happy hardcoding o7
 
 
 
@@ -16,25 +20,104 @@ using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Xml.Serialization;
 using Godot;
+using static AstroProp_Runtime;
 
 
 public partial class AstroProp_Runtime : Node3D
 {
+    public void SY4(ref Godot.Vector3 PosCartesian, ref Godot.Vector3 VelCartesian, Godot.Vector3 InstantaneousAccel, double MET)
+    {
+        double curt2 = 1.25992104989;
+        double w0 = -(curt2 / (2 - curt2));
+        double w1 = (1 / (2 - curt2));
+
+        double c1 = w1 / 2;
+        double c4 = w1 / 2;
+        double c2 = (w0 + w1) / 2;
+        double c3 = (w0 + w1) / 2;
+
+        double d1 = w1;
+        double d3 = w1;
+        double d2 = w0;
+
+        // PosCartesian = PosCartesian * (float)ScaleConversion("ToRealUnits"); do this when calling le function
+
+
+        Godot.Vector3 x1 = PosCartesian + VelCartesian * (float)(c1 * Reference.Dynamics.TimeStep);
+        Godot.Vector3 a1 = new Godot.Vector3();
+        GravityMain_SOI(x1, MET, a1);
+        foreach (var CelestialRender in KeplerContainers)
+        {
+            Godot.Vector3 TempAccel = new Godot.Vector3();
+            GravityGradient(CelestialRender, x1, MET, TempAccel);
+            a1 += TempAccel;
+            //Debug.Log(CelestialRender.Name.ToString());
+        }
+        a1 += InstantaneousAccel;
+
+        Godot.Vector3 v1 = VelCartesian + (float)(d1) * a1 * (float)Reference.Dynamics.TimeStep;
+        Godot.Vector3 x2 = x1 + (float)c2 * v1 * (float)Reference.Dynamics.TimeStep;
+
+        Godot.Vector3 a2 = new Godot.Vector3();
+        GravityMain_SOI(x2, MET, a2);
+        foreach (var CelestialRender in KeplerContainers)
+        {
+            Godot.Vector3 TempAccel = new Godot.Vector3();
+            GravityGradient(CelestialRender, x2, MET, TempAccel);
+            a2 += TempAccel;
+            //Debug.Log(CelestialRender.Name.ToString());
+        }
+        a2 += InstantaneousAccel;
+
+        Godot.Vector3 v2 = v1 + (float)(d2) * a2 * (float)Reference.Dynamics.TimeStep;
+        Godot.Vector3 x3 = x2 + (float)c3 * v2 * (float)Reference.Dynamics.TimeStep;
+
+        Godot.Vector3 a3 = new Godot.Vector3();
+        GravityMain_SOI(x3, MET, a3);
+        foreach (var CelestialRender in KeplerContainers)
+        {
+            Godot.Vector3 TempAccel = new Godot.Vector3();
+            GravityGradient(CelestialRender, x3, MET, TempAccel);
+            a3 += TempAccel;
+            //Debug.Log(CelestialRender.Name.ToString());
+        }
+        a3 += InstantaneousAccel;
+
+        Godot.Vector3 v3 = v2 + (float)(d3) * a3 * (float)Reference.Dynamics.TimeStep;
+        Godot.Vector3 x4 = x3 + (float)c4 * v3 * (float)Reference.Dynamics.TimeStep;
+
+        Godot.Vector3 v4 = v3;
+
+        PosCartesian = x4;
+        VelCartesian = v4;
+    }
+    
+    public class StateVectors
+    {
+        public Godot.Vector3 PosCartesian = new Godot.Vector3();
+        public Godot.Vector3 VelCartesian = new Godot.Vector3();
+
+        public Godot.Vector3 NextPosLerp = new Godot.Vector3();
+
+        //noballs variable lmao:
+        public Godot.Vector3 InstantaneousAccel = new Godot.Vector3(); // Instantaneous propulsion by engines to be considered by ship
+    }
     public class SegmentStepFrame
     {
         public double MET = 0;
 
         public Node3D ObjectRef;
-        public class StateVectors
-        {
-            public Godot.Vector3 PosCartesian = new Godot.Vector3();
-            public Godot.Vector3 VelCartesian = new Godot.Vector3();
+        
+        
+        public Godot.Vector3 PosCartesian = new Godot.Vector3();
+        public Godot.Vector3 VelCartesian = new Godot.Vector3();
 
-            public Godot.Vector3 NextPosLerp = new Godot.Vector3();
+        public Godot.Vector3 NextPosLerp = new Godot.Vector3();
 
             //noballs variable lmao:
-            public Godot.Vector3 InstantaneousAccel = new Godot.Vector3(); // Instantaneous propulsion by engines to be considered by ship
-        }
+        public Godot.Vector3 InstantaneousAccel = new Godot.Vector3(); // Instantaneous propulsion by engines to be considered by ship
+        
+
         public double DeltaV;
 
         public string Event1; // misc register name
@@ -44,44 +127,104 @@ public partial class AstroProp_Runtime : Node3D
         public double Data1; // register data
         public double Data2;
         public double Data3;
+
+       
+        
+        public SegmentStepFrame(
+            double MET,
+            Godot.Vector3 Prev_Pos,
+            Godot.Vector3 Prev_Vel,
+            Godot.Vector3 Des_Accel,
+
+            bool PredictNextPosLerp
+           )
+        {
+            //  this.PosCartesian;
+            this.PosCartesian = Prev_Pos;
+            this.VelCartesian = Prev_Vel;
+            this.InstantaneousAccel = Des_Accel;
+
+            
+        }
     }
+    
     public class ProjectOry
     {
         public string Name;
         public string Description;
 
-        public double StartFrame;
-        // public ObjectRef = GetNode<Spatial>("%MyUniqueNodeName");
+       
 
-        public Node3D ObjectRef;
+        public int StartMET;
+        public int InterruptMET; // public ObjectRef = GetNode<Spatial>("%MyUniqueNodeName");
 
-        public ProjectOry(
-           Node3D ObjectRef,
+        public Godot.ImmediateMesh TrackStripMesh;
+
+        public Node3D ParentRef;// = GetNode<Node3D>("Global"); // default is just the global scene (main soi relative)
+        public Node3D ObjectRef; //this is the node3d that the primitive line strip is parented to
+
+       
+        //LineMat.sha = Godot.BaseMaterial3D.ShadingModeEnum = 1;
+
+
+        public List<SegmentStepFrame> Trajectory = new List<SegmentStepFrame>();
+        public ProjectOry( // rendered trajectory
+           Node3D ParentRef,
            string Name,
            string Description,
            Godot.Vector3 PosCartesian,
            Godot.Vector3 VelCartesian,
-           Godot.Vector3 InstantaneousAccel
-
+           Godot.Vector3 InstantaneousAccel,
+           int StartMET,
+           int InterruptMET
             
            )
         {
-            this.ObjectRef = ObjectRef;
-            this.Name = Name;
-            this.Description = Description;
-            this.ObjectRef = ObjectRef;
-            // this.StateVectors.InstantaneousAccel = InstantaneousAccel;
-
-
-            // this.NBodyRef = Instantiate(NBodyRef, new Godot.Vector3(0, 0, 0), Godot.Quaternion.identity);
+            
 
         }
 
-        List<SegmentStepFrame> Trajectory = new List<SegmentStepFrame>();
+       
 
         // create another list of the projected segments, then tell them to remove themselves as their MET is surpassed
     }
+    public void SetUpProjectOry(
+           ref ProjectOry ProjectOry,
+           Node3D ParentRef,
+           string Name,
+           string Description,
+           Godot.Vector3 PosCartesian,
+           Godot.Vector3 VelCartesian,
+           Godot.Vector3 InstantaneousAccel,
+           int StartMET,
+           int InterruptMET
 
+
+    )
+    {
+        Godot.OrmMaterial3D LineMat = new Godot.OrmMaterial3D();
+        ProjectOry.ParentRef = ParentRef;
+        ProjectOry.Name = Name;
+        ProjectOry.Description = Description;
+
+        ProjectOry.ObjectRef = new Godot.MeshInstance3D(); // the track itself
+        ProjectOry.TrackStripMesh = new Godot.ImmediateMesh();
+        ProjectOry.TrackStripMesh.SurfaceBegin(Godot.Mesh.PrimitiveType.LineStrip, LineMat);
+
+        // this.StateVectors.InstantaneousAccel = InstantaneousAccel;
+        ProjectOry.InterruptMET = InterruptMET;
+        ProjectOry.StartMET = StartMET;
+
+        for (int i = StartMET; i < InterruptMET; i++)
+        {
+            SegmentStepFrame Iter_Frame = new SegmentStepFrame(i, PosCartesian, VelCartesian, InstantaneousAccel, false);
+            SY4(ref Iter_Frame.PosCartesian, ref Iter_Frame.VelCartesian, Iter_Frame.InstantaneousAccel, Iter_Frame.MET);
+            ProjectOry.Trajectory.Add(Iter_Frame);
+            ProjectOry.TrackStripMesh.SurfaceAddVertex(Iter_Frame.PosCartesian);
+        };
+        ProjectOry.TrackStripMesh.SurfaceEnd();
+        // this.NBodyRef = Instantiate(NBodyRef, new Godot.Vector3(0, 0, 0), Godot.Quaternion.identity);
+    }
     public class NBodyAffected // ballistic and nonballistic object
     {
         public string Name;
@@ -89,7 +232,7 @@ public partial class AstroProp_Runtime : Node3D
 
         public Node3D ObjectRef;
 
-        public SegmentStepFrame.StateVectors StateVectors = new SegmentStepFrame.StateVectors();
+        public StateVectors StateVectors = new StateVectors();
 
         public ProjectOry Trajectory;
 
@@ -368,73 +511,7 @@ public partial class AstroProp_Runtime : Node3D
 
         // return FromProjToSOI;
     }
-
-    public void SY4(ref Godot.Vector3 PosCartesian, ref Godot.Vector3 VelCartesian, Godot.Vector3 InstantaneousAccel, double MET)
-    {
-        double curt2 = 1.25992104989;
-        double w0 = -(curt2 / (2 - curt2));
-        double w1 = (1 / (2 - curt2));
-
-        double c1 = w1 / 2;
-        double c4 = w1 / 2;
-        double c2 = (w0 + w1) / 2;
-        double c3 = (w0 + w1) / 2;
-
-        double d1 = w1;
-        double d3 = w1;
-        double d2 = w0;
-
-        // PosCartesian = PosCartesian * (float)ScaleConversion("ToRealUnits"); do this when calling le function
-
-
-        Godot.Vector3 x1 = PosCartesian + VelCartesian * (float)(c1 * Reference.Dynamics.TimeStep);
-        Godot.Vector3 a1 = new Godot.Vector3();
-        GravityMain_SOI(x1, MET, a1);
-        foreach (var CelestialRender in KeplerContainers)
-        {
-            Godot.Vector3 TempAccel = new Godot.Vector3();
-            GravityGradient(CelestialRender, x1, MET, TempAccel);
-            a1 += TempAccel;
-            //Debug.Log(CelestialRender.Name.ToString());
-        }
-        a1 += InstantaneousAccel;
-
-        Godot.Vector3 v1 = VelCartesian + (float)(d1) * a1 * (float)Reference.Dynamics.TimeStep;
-        Godot.Vector3 x2 = x1 + (float)c2 * v1 * (float)Reference.Dynamics.TimeStep;
-
-        Godot.Vector3 a2 = new Godot.Vector3();
-        GravityMain_SOI(x2, MET, a2);
-        foreach (var CelestialRender in KeplerContainers)
-        {
-            Godot.Vector3 TempAccel = new Godot.Vector3();
-            GravityGradient(CelestialRender, x2, MET, TempAccel);
-            a2 += TempAccel;
-            //Debug.Log(CelestialRender.Name.ToString());
-        }
-        a2 += InstantaneousAccel;
-
-        Godot.Vector3 v2 = v1 + (float)(d2) * a2 * (float)Reference.Dynamics.TimeStep;
-        Godot.Vector3 x3 = x2 + (float)c3 * v2 * (float)Reference.Dynamics.TimeStep;
-
-        Godot.Vector3 a3 = new Godot.Vector3();
-        GravityMain_SOI(x3, MET, a3);
-        foreach (var CelestialRender in KeplerContainers)
-        {
-            Godot.Vector3 TempAccel = new Godot.Vector3();
-            GravityGradient(CelestialRender, x3, MET, TempAccel);
-            a3 += TempAccel;
-            //Debug.Log(CelestialRender.Name.ToString());
-        }
-        a3 += InstantaneousAccel;
-
-        Godot.Vector3 v3 = v2 + (float)(d3) * a3 * (float)Reference.Dynamics.TimeStep;
-        Godot.Vector3 x4 = x3 + (float)c4 * v3 * (float)Reference.Dynamics.TimeStep;
-
-        Godot.Vector3 v4 = v3;
-
-        PosCartesian = x4;
-        VelCartesian = v4;
-    }
+    
 
     public static double ScaleConversion(string Units)
     {

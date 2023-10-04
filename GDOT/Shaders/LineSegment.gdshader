@@ -1,12 +1,14 @@
 shader_type spatial;
 render_mode cull_disabled;
 
+
+
 uniform vec3 StartPos = vec3(0,10,3);
 uniform vec3 EndPos = vec3(1,10,0);
 
 
 
-uniform float LineThickness = .001;
+uniform float LineThickness = .0001;
 
 uniform vec3 Color = vec3(0,0,1);
 //const StartPos = get_meta("StartPos");
@@ -55,7 +57,7 @@ void vertex() {
 		float Coefficient = (LineThickness*CTVMag);
 		vec3 NewPos = StartPos+(Cross*Coefficient);
 		VERTEX.x = NewPos.x;
-		VERTEX.y = NewPos.y+LineThickness/2.0;
+		VERTEX.y = NewPos.y;
 		VERTEX.z = NewPos.z;
 	}
 	//here comes the debug
@@ -67,7 +69,7 @@ void vertex() {
 		float Coefficient = (LineThickness*CTVMag);
 		vec3 NewPos = StartPos-(Cross*Coefficient);
 		VERTEX.x = NewPos.x;
-		VERTEX.y = NewPos.y-LineThickness/2.0;
+		VERTEX.y = NewPos.y;
 		VERTEX.z = NewPos.z;
 	}
 	if (VERTEX_ID == 1){
@@ -78,7 +80,7 @@ void vertex() {
 		float Coefficient = (LineThickness*CTVMag);
 		vec3 NewPos = EndPos+(Cross*Coefficient);
 		VERTEX.x = NewPos.x;
-		VERTEX.y = NewPos.y+LineThickness/2.0;
+		VERTEX.y = NewPos.y;
 		VERTEX.z = NewPos.z;
 	}
 	//here comes the debug
@@ -90,7 +92,7 @@ void vertex() {
 		float Coefficient = (LineThickness*CTVMag);
 		vec3 NewPos = EndPos-(Cross*Coefficient);
 		VERTEX.x = NewPos.x;
-		VERTEX.y = NewPos.y-LineThickness/2.0;
+		VERTEX.y = NewPos.y;
 		VERTEX.z = NewPos.z;
 	}
 }
@@ -99,6 +101,8 @@ void fragment() {
 	// Place fragment code here.
 	ALBEDO = Color;
 	EMISSION = Color;
+	RIM = 1.0;
+	RIM_TINT = 1.0;
 	
 	
 	// set_vertex( int indx, Vector3 vertex )
