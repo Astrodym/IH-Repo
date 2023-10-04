@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://brcjq0khkm2gm"]
+
+[ext_resource type="Shader" path="res://Scenes/ShipComponents/RadiatorShader.gdshader" id="1_wggex"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i24j8"]
+render_priority = 0
+shader = ExtResource("1_wggex")
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_eii5f"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="ProceduralRadiatorMesh" type="MeshInstance3D" parent="."]
+material_override = SubResource("ShaderMaterial_i24j8")
+mesh = SubResource("ArrayMesh_eii5f")
