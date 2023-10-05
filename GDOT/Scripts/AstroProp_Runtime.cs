@@ -99,7 +99,7 @@ public partial class AstroProp_Runtime : Node3D
         public Godot.Vector3 PosCartesian = new Godot.Vector3();
         public Godot.Vector3 VelCartesian = new Godot.Vector3();
 
-        public Godot.Vector3 NextPosLerp = new Godot.Vector3();
+        public Godot.Vector3 PrevPosLerp = new Godot.Vector3();
 
         //noballs variable lmao:
         public Godot.Vector3 InstantaneousAccel = new Godot.Vector3(); // Instantaneous propulsion by engines to be considered by ship
@@ -114,7 +114,7 @@ public partial class AstroProp_Runtime : Node3D
         public Godot.Vector3 PosCartesian = new Godot.Vector3();
         public Godot.Vector3 VelCartesian = new Godot.Vector3();
 
-        public Godot.Vector3 NextPosLerp = new Godot.Vector3();
+        public Godot.Vector3 PrevPosLerp = new Godot.Vector3();
 
             //noballs variable lmao:
         public Godot.Vector3 InstantaneousAccel = new Godot.Vector3(); // Instantaneous propulsion by engines to be considered by ship
@@ -138,7 +138,7 @@ public partial class AstroProp_Runtime : Node3D
             Godot.Vector3 Prev_Vel,
             Godot.Vector3 Des_Accel,
 
-            bool PredictNextPosLerp
+            bool PredictPrevPosLerp
            )
         {
             this.MET = MET;
@@ -390,8 +390,8 @@ public partial class AstroProp_Runtime : Node3D
             public static double TimeStep = 1 / 1; // seconds in between
             public static double MET = 0; //mean elapsed time
 
-            public static double RandomAssConstant = 9;//8.4 for some odd reason
-            public static double TimeCompression = 2360448/ 100; //100000; // default is 1, 2548800 is 1 lunar month per second
+            public static double RandomAssConstant = 9;//9, 8.4 for some odd reason
+            public static double TimeCompression = (1); //100000; // default is 1, 2360448 is 1 lunar month per second
 
             public static double DegToRads = Math.PI / 180;
         };
@@ -614,7 +614,7 @@ public partial class AstroProp_Runtime : Node3D
         Godot.Vector3 PosCartesian = Object.StateVectors.PosCartesian;
         Godot.Vector3 VelCartesian = Object.StateVectors.VelCartesian;
         //double MET_Frame = MET;
-
+        Object.StateVectors.PrevPosLerp = PosCartesian;
         SY4(ref PosCartesian, ref VelCartesian, Object.StateVectors.InstantaneousAccel, MET);
 
        
@@ -656,6 +656,7 @@ public partial class AstroProp_Runtime : Node3D
     // Start is called before the first frame update
     public override void _Ready()
     {
+        Reference.Dynamics.TimeCompression = 1;
         GD.Print("Boostrapper Startup");
         // Line ends after this, wtf???
         GD.Print(GetNode<Node3D>("Global/Moon").Position);
@@ -702,29 +703,27 @@ public partial class AstroProp_Runtime : Node3D
 
     }
     public static double LastStep = 0;
-    public static double NextStep = Reference.Dynamics.TimeStep;
+    public static double NextStep = Time.GetUnixTimeFromSystem() + Reference.Dynamics.TimeStep / (Reference.Dynamics.TimeCompression);
     // Update is called once per frame
     public override void _Process(double Delta)
     {
 
         double RealTimeInterpolate = Reference.Dynamics.MET;
+        bool debug = false;
 
-        if (Time.GetUnixTimeFromSystem() >= NextStep)
+        
+       // GD.Print((int)Math.Ceiling((Time.GetUnixTimeFromSystem() - NextStep) / (1 / (Reference.Dynamics.TimeCompression))));
+        if (Time.GetUnixTimeFromSystem() >= NextStep & (! debug)) 
         {
-            int OverfillFrame = (int)Math.Ceiling((Time.GetUnixTimeFromSystem() - NextStep) / (1 / (Reference.Dynamics.TimeCompression * Reference.Dynamics.RandomAssConstant))); //(int)Math.Ceiling(Time.time - NextStep);
-            // Debug.Log((Time.time - NextStep)/ (1 / Reference.Dynamics.TimeCompression));
-            //Debug.Log(Time.time + ">=" + NextStep);
-            // Change the next update (current second+1)
+            int OverfillFrame = (int)Math.Ceiling((Time.GetUnixTimeFromSystem() - NextStep) / (1 / (Reference.Dynamics.TimeCompression))); //(int)Math.Ceiling(Time.time - NextStep);
+          // overfillframe just gives UnixTime for some reason?? fixed --10052023 jcr
             LastStep = Time.GetUnixTimeFromSystem();
-            NextStep = (Time.GetUnixTimeFromSystem()) + Reference.Dynamics.TimeStep / (Reference.Dynamics.TimeCompression * Reference.Dynamics.RandomAssConstant);
-            // Call your fonction
-
-            // loop begins to empty the overfill of the timecompression (actions occurring more often than the frames can accommodate, so loop to catch up)
+            NextStep = (Time.GetUnixTimeFromSystem()) + Reference.Dynamics.TimeStep / (Reference.Dynamics.TimeCompression);
             for (int i = 0; i < OverfillFrame; i++)
             {
-                // Debug.Log("Calc");
+                
                 BeginStepOps();
-                //Debug.Log(OverfillFrame);
+            
             };
 
             RealTimeInterpolate = Reference.Dynamics.MET;
@@ -734,13 +733,18 @@ public partial class AstroProp_Runtime : Node3D
             RealTimeInterpolate = Reference.Dynamics.MET + (Time.GetUnixTimeFromSystem() - NextStep);
 
         }
-
+       // Reference.Dynamics.TimeCompression = 2;
         foreach (var NBodyAffected in NByContainers)
         {
-            float LerpFloat = 0*(float)RealTimeInterpolate;
-            Godot.Vector3 LerpV3 = NBodyAffected.StateVectors.NextPosLerp - NBodyAffected.StateVectors.PosCartesian;
+            //GD.Print(RealTimeInterpolate);
+            float LerpFloat = (float)(1-(Reference.Dynamics.MET-RealTimeInterpolate));
+            Godot.Vector3 LerpV3 = NBodyAffected.StateVectors.PosCartesian - NBodyAffected.StateVectors.PrevPosLerp;
+           // GD.Print(LerpFloat,NBodyAffected.StateVectors.PrevPosLerp);
+            NBodyAffected.ObjectRef.Position = (float)ScaleConversion("ToUnityUnits")*(NBodyAffected.StateVectors.PrevPosLerp + LerpV3 * LerpFloat);
 
-            NBodyAffected.ObjectRef.Position = NBodyAffected.StateVectors.PosCartesian*(float)ScaleConversion("ToUnityUnits") + LerpV3 * LerpFloat;
+
+
+            //NBodyAffected.ObjectRef.Position = NBodyAffected.StateVectors.PosCartesian*(float)ScaleConversion("ToUnityUnits") + LerpV3 * LerpFloat;
             //GD.Print(NBodyAffected.StateVectors.PosCartesian);
             //Debug.Log(CelestialRender.Name.ToString());
         }
