@@ -283,7 +283,7 @@ public partial class AstroProp_Runtime : Node3D
             Vessel.StateVectors.VelCartesian,
             new Godot.Vector3(),
             (int)Reference.Dynamics.MET,
-            90*60
+            259200
             //(int)(OrbitalPeriod * 1.5)
             );
         SetUpProjectOry(ref Vessel.Trajectory, Vessel.ObjectRef);
@@ -390,8 +390,8 @@ public partial class AstroProp_Runtime : Node3D
             public static double TimeStep = 1 / 1; // seconds in between
             public static double MET = 0; //mean elapsed time
 
-            public static double RandomAssConstant = 8.4;
-            public static double TimeCompression = 10; //100000; // default is 1, 2548800 is 1 lunar month per second
+            public static double RandomAssConstant = 9;//8.4 for some odd reason
+            public static double TimeCompression = 2360448/ 100; //100000; // default is 1, 2548800 is 1 lunar month per second
 
             public static double DegToRads = Math.PI / 180;
         };
@@ -453,7 +453,7 @@ public partial class AstroProp_Runtime : Node3D
 
         double dtT = MET_Frame;
 
-        double M = dtT * System.Math.Sqrt(SOI.GravitationalParameter / System.Math.Pow(SOI.SMA, 3));
+        double M = dtT*Reference.Dynamics.RandomAssConstant * System.Math.Sqrt(SOI.GravitationalParameter / System.Math.Pow(SOI.SMA, 3));
         // mean anom
         ReturnEccentricAnomaly(M, SOI.Eccentricity, ref E);
         // Class Keplerian = SOI.GetType()
@@ -633,6 +633,12 @@ public partial class AstroProp_Runtime : Node3D
 
     void BeginStepOps()
     {
+        if (Reference.Dynamics.MET == (2360448))
+        {
+            GD.Print("Lunar orbit debug");
+            Reference.Dynamics.TimeCompression = 1;
+        }
+
         Reference.Dynamics.MET += Reference.Dynamics.TimeStep;
         // Begin to do the Celestials 
         // naaa fuck that
@@ -681,8 +687,8 @@ public partial class AstroProp_Runtime : Node3D
             GetNode<Node3D>("Global/Sagitta"),
             "Sagitta",
             "a spaceship",
-            new Godot.Vector3(6789000, 0,0), //6789000 iss altitude meters
-            new Godot.Vector3(0, 200, -7667), //-6576 iss velocity m/s
+            new Godot.Vector3(-6789000, 0,0), //6789000 iss altitude meters
+            new Godot.Vector3(500, 00, -7667-3000), //-6576 iss velocity m/s
             new Godot.Vector3(0, 0, 0) // zero propulsion
 
 
