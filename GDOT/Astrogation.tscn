@@ -52,7 +52,6 @@ surface_material_override/0 = SubResource("StandardMaterial3D_4inap")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.322, 0, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Global/Sagitta"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0709448, -0.0563674, -0.00319767)
 mesh = ExtResource("1_dh6yw")
 surface_material_override/0 = SubResource("StandardMaterial3D_q8tf5")
 

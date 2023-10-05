@@ -42,7 +42,7 @@ public partial class AstroProp_Runtime : Node3D
 
         // PosCartesian = PosCartesian * (float)ScaleConversion("ToRealUnits"); do this when calling le function
 
-        GD.Print(PosCartesian);
+       // GD.Print(PosCartesian);
         Godot.Vector3 x1 = PosCartesian + VelCartesian * (float)(c1 * Reference.Dynamics.TimeStep);
         Godot.Vector3 a1 = new Godot.Vector3();
         GravityMain_SOI(x1, MET, ref a1);
@@ -54,6 +54,7 @@ public partial class AstroProp_Runtime : Node3D
             a1 += TempAccel;
             //Debug.Log(CelestialRender.Name.ToString());
         }
+       // GD.Print(a1);
         a1 += InstantaneousAccel;
 
         Godot.Vector3 v1 = VelCartesian + (float)(d1) * a1 * (float)Reference.Dynamics.TimeStep;
@@ -88,7 +89,7 @@ public partial class AstroProp_Runtime : Node3D
         Godot.Vector3 x4 = x3 + (float)c4 * v3 * (float)Reference.Dynamics.TimeStep;
 
         Godot.Vector3 v4 = v3;
-        //GD.Print(v4 * (float)ScaleConversion("ToUnityUnits"));
+        //GD.Print(v4 );//* (float)ScaleConversion("ToUnityUnits")
         PosCartesian = x4;
         VelCartesian = v4;
     }
@@ -330,7 +331,7 @@ public partial class AstroProp_Runtime : Node3D
             public static double MET = 0; //mean elapsed time
 
             public static double RandomAssConstant = 8.4;
-            public static double TimeCompression = 1; //100000; // default is 1, 2548800 is 1 lunar month per second
+            public static double TimeCompression = 10; //100000; // default is 1, 2548800 is 1 lunar month per second
 
             public static double DegToRads = Math.PI / 180;
         };
@@ -561,7 +562,7 @@ public partial class AstroProp_Runtime : Node3D
 
         
         // SOI.ObjectRef.Translate(PosCartesian);
-        Object.ObjectRef.Position = (new Godot.Vector3((float)(PosCartesian.X * LocalScale), (float)(PosCartesian.Y * LocalScale), (float)(PosCartesian.Z * LocalScale)));
+        //Object.ObjectRef.Position = (new Godot.Vector3((float)(PosCartesian.X * LocalScale), (float)(PosCartesian.Y * LocalScale), (float)(PosCartesian.Z * LocalScale)));
 
 
         Object.StateVectors.PosCartesian = PosCartesian;
@@ -619,9 +620,9 @@ public partial class AstroProp_Runtime : Node3D
         NByContainers.Add(new NBodyAffected(
             GetNode<Node3D>("Global/Sagitta"),
             "Sagitta",
-            "a dumbfuck",
-            new Godot.Vector3(6789000, 0,0), //iss altitude meters
-            new Godot.Vector3(6576, 0, 0), //iss velocity m/s
+            "a spaceship",
+            new Godot.Vector3(6789000, 0,0), //6789000 iss altitude meters
+            new Godot.Vector3(0, 0, -7667), //-6576 iss velocity m/s
             new Godot.Vector3(0, 0, 0) // zero propulsion
 
 
@@ -667,10 +668,10 @@ public partial class AstroProp_Runtime : Node3D
 
         foreach (var NBodyAffected in NByContainers)
         {
-            float LerpFloat = (float)RealTimeInterpolate;
+            float LerpFloat = 0*(float)RealTimeInterpolate;
             Godot.Vector3 LerpV3 = NBodyAffected.StateVectors.NextPosLerp - NBodyAffected.StateVectors.PosCartesian;
 
-            NBodyAffected.ObjectRef.Position = NBodyAffected.StateVectors.PosCartesian + LerpV3 * LerpFloat;
+            NBodyAffected.ObjectRef.Position = NBodyAffected.StateVectors.PosCartesian*(float)ScaleConversion("ToUnityUnits") + LerpV3 * LerpFloat;
             //GD.Print(NBodyAffected.StateVectors.PosCartesian);
             //Debug.Log(CelestialRender.Name.ToString());
         }
