@@ -1,5 +1,5 @@
 // Jonathan C. Ross 
-// 09 01 2023 
+// 09 01 2023 C
 
 
 // Fuck you, Unity.
@@ -164,13 +164,13 @@ public partial class AstroProp_Runtime : Node3D
         public Godot.ImmediateMesh TrackStripMesh;
 
         public Node3D ParentRef;// = GetNode<Node3D>("Global"); // default is just the global scene (main soi relative)
-        public Node3D ObjectRef; //this is the node3d that the primitive line strip is parented to
+        public MeshInstance3D ObjectRef; //this is the node3d that the primitive line strip is parented to
 
-       
+        public StateVectors StateVectors = new StateVectors(); // state at the start of the trajectory
         //LineMat.sha = Godot.BaseMaterial3D.ShadingModeEnum = 1;
 
 
-        public List<SegmentStepFrame> Trajectory = new List<SegmentStepFrame>();
+        public List<SegmentStepFrame> Trajectory;
         public ProjectOry( // rendered trajectory
            Node3D ParentRef,
            string Name,
@@ -183,7 +183,15 @@ public partial class AstroProp_Runtime : Node3D
             
            )
         {
-            
+            this.ParentRef = ParentRef;
+            this.Name = Name;
+            this.Description = Description;
+            this.StateVectors.PosCartesian = PosCartesian;
+            this.StateVectors.VelCartesian = VelCartesian;
+            this.StateVectors.InstantaneousAccel = InstantaneousAccel;
+
+            this.StartMET = StartMET;
+            this.InterruptMET = InterruptMET;
 
         }
 
@@ -193,40 +201,82 @@ public partial class AstroProp_Runtime : Node3D
     }
     public void SetUpProjectOry(
            ref ProjectOry ProjectOry,
-           Node3D ParentRef,
-           string Name,
-           string Description,
-           Godot.Vector3 PosCartesian,
-           Godot.Vector3 VelCartesian,
-           Godot.Vector3 InstantaneousAccel,
-           int StartMET,
-           int InterruptMET
+           Node3D ParentRef
+          
 
 
     )
     {
+        GD.Print(
+            ProjectOry,
+            ParentRef
+            );
         Godot.OrmMaterial3D LineMat = new Godot.OrmMaterial3D();
+        LineMat.ShadingMode = BaseMaterial3D.ShadingModeEnum.Unshaded;
+        LineMat.DisableReceiveShadows = true;
+        LineMat.AlbedoColor = Color.FromHsv(1, 1, 1);
+
         ProjectOry.ParentRef = ParentRef;
         ProjectOry.Name = Name;
-        ProjectOry.Description = Description;
+        
 
         ProjectOry.ObjectRef = new Godot.MeshInstance3D(); // the track itself
         ProjectOry.TrackStripMesh = new Godot.ImmediateMesh();
         ProjectOry.TrackStripMesh.SurfaceBegin(Godot.Mesh.PrimitiveType.LineStrip, LineMat);
 
+        
+        ProjectOry.ObjectRef.Mesh = ProjectOry.TrackStripMesh;
         // this.StateVectors.InstantaneousAccel = InstantaneousAccel;
-        ProjectOry.InterruptMET = InterruptMET;
-        ProjectOry.StartMET = StartMET;
+        
 
-        for (int i = StartMET; i < InterruptMET; i++)
+        Godot.Vector3 LS_P = ProjectOry.StateVectors.PosCartesian;
+        Godot.Vector3 LS_V = ProjectOry.StateVectors.VelCartesian;
+
+        ProjectOry.TrackStripMesh.SurfaceAddVertex(LS_P * (float)ScaleConversion("ToUnityUnits"));
+        //GD.Print(ProjectOry.StartMET, ProjectOry.InterruptMET);
+        GD.Print(LS_P * (float)ScaleConversion("ToUnityUnits"));
+        ProjectOry.Trajectory = new List<SegmentStepFrame>(ProjectOry.InterruptMET - ProjectOry.StartMET);
+        for (int i = ProjectOry.StartMET; i < ProjectOry.InterruptMET; i++)
         {
-            SegmentStepFrame Iter_Frame = new SegmentStepFrame(i, PosCartesian, VelCartesian, InstantaneousAccel, false);
-            SY4(ref Iter_Frame.PosCartesian, ref Iter_Frame.VelCartesian, Iter_Frame.InstantaneousAccel, Iter_Frame.MET);
-            ProjectOry.Trajectory.Add(Iter_Frame);
-            ProjectOry.TrackStripMesh.SurfaceAddVertex(Iter_Frame.PosCartesian);
+            SegmentStepFrame Iter_Frame = new SegmentStepFrame(i, LS_P, LS_V, ProjectOry.StateVectors.InstantaneousAccel, false);
+            SY4(ref LS_P, ref LS_P, Iter_Frame.InstantaneousAccel, i);
+
+            ProjectOry.Trajectory.Add(Iter_Frame); // store instantaneous trajectory data here 
+            ProjectOry.TrackStripMesh.SurfaceAddVertex(LS_P*(float)ScaleConversion("ToUnityUnits"));
+           // GD.Print(LS_P * (float)ScaleConversion("ToUnityUnits"));
         };
+        GD.Print(LS_P * (float)ScaleConversion("ToUnityUnits"));
+        GD.Print("Done rendering");
+        GD.Print(ProjectOry.Trajectory);
         ProjectOry.TrackStripMesh.SurfaceEnd();
+        ProjectOry.ObjectRef.TopLevel = true; // disable if relative to another body besides the main soi
+        ParentRef.AddChild(ProjectOry.ObjectRef);
         // this.NBodyRef = Instantiate(NBodyRef, new Godot.Vector3(0, 0, 0), Godot.Quaternion.identity);
+    }
+    public void RunBallisticTrack(
+
+           NBodyAffected Vessel
+    )
+    {
+        double OrbitalPeriod = CalculateOrbital(
+            new Godot.Vector3(),
+            Vessel.StateVectors.PosCartesian,
+            Vessel.StateVectors.VelCartesian,
+            new Godot.Vector3(),
+            Reference.SOI.MainReference.GravitationalParameter
+            );
+        GD.Print((int)(OrbitalPeriod * 1.5));
+        Vessel.Trajectory = new ProjectOry(
+            Vessel.ObjectRef,
+            "Ballistic Trajectory",
+            "",
+            Vessel.StateVectors.PosCartesian,
+            Vessel.StateVectors.VelCartesian,
+            new Godot.Vector3(),
+            (int)Reference.Dynamics.MET,
+            (int)(OrbitalPeriod * 1.5)
+            );
+        SetUpProjectOry(ref Vessel.Trajectory, Vessel.ObjectRef);
     }
     public class NBodyAffected // ballistic and nonballistic object
     {
@@ -322,7 +372,7 @@ public partial class AstroProp_Runtime : Node3D
 
     public class Reference
     {
-
+        
         public class Dynamics
         {
             public static double StandardGravParam = (6.67 * Mathf.Pow(10, -11)); // Unmodifiable
@@ -525,8 +575,8 @@ public partial class AstroProp_Runtime : Node3D
 
         double SMA = -(SOI_Mu*Distance)/(Distance*Relative_Vel-2*SOI_Mu);
         double Period = 2 * System.Math.PI * System.Math.Sqrt(Math.Pow(SMA, 3)/SOI_Mu);
-
-        return SMA;
+        GD.Print(Period);
+        return Period;
     }
     public void MoveCelestial(CelestialRender SOI, double MET)
     {
@@ -627,7 +677,10 @@ public partial class AstroProp_Runtime : Node3D
 
 
         ));
-
+        foreach (var NBodyAffected in NByContainers)
+        {
+            RunBallisticTrack(NBodyAffected);
+        }
         // Debug.Log(Reference.SOI.KeplerContainer);
         // Reference.SOI.PrintProperties()
 
