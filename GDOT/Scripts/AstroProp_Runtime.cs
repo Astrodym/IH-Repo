@@ -231,26 +231,30 @@ public partial class AstroProp_Runtime : Node3D
 
         Godot.Vector3 LS_P = ProjectOry.StateVectors.PosCartesian;
         Godot.Vector3 LS_V = ProjectOry.StateVectors.VelCartesian;
-
         ProjectOry.TrackStripMesh.SurfaceAddVertex(LS_P * (float)ScaleConversion("ToUnityUnits"));
-        //GD.Print(ProjectOry.StartMET, ProjectOry.InterruptMET);
+        GD.Print(ProjectOry.StartMET, ProjectOry.InterruptMET);
         GD.Print(LS_P * (float)ScaleConversion("ToUnityUnits"));
+        
         ProjectOry.Trajectory = new List<SegmentStepFrame>(ProjectOry.InterruptMET - ProjectOry.StartMET);
         for (int i = ProjectOry.StartMET; i < ProjectOry.InterruptMET; i++)
         {
+            SY4(ref LS_P, ref LS_V, ProjectOry.StateVectors.InstantaneousAccel, i);
             SegmentStepFrame Iter_Frame = new SegmentStepFrame(i, LS_P, LS_V, ProjectOry.StateVectors.InstantaneousAccel, false);
-            SY4(ref LS_P, ref LS_P, Iter_Frame.InstantaneousAccel, i);
-
+            //GD.Print(LS_V);
+            //GD.Print(i);
             ProjectOry.Trajectory.Add(Iter_Frame); // store instantaneous trajectory data here 
-            ProjectOry.TrackStripMesh.SurfaceAddVertex(LS_P*(float)ScaleConversion("ToUnityUnits"));
-           // GD.Print(LS_P * (float)ScaleConversion("ToUnityUnits"));
+            ProjectOry.TrackStripMesh.SurfaceAddVertex(LS_P * (float)ScaleConversion("ToUnityUnits"));
+            //ProjectOry.TrackStripMesh.SurfaceAddVertex(LS_P*(float)ScaleConversion("ToUnityUnits"));
+            // GD.Print(LS_P * (float)ScaleConversion("ToUnityUnits"));
         };
-        GD.Print(LS_P * (float)ScaleConversion("ToUnityUnits"));
-        GD.Print("Done rendering");
-        GD.Print(ProjectOry.Trajectory);
+        //GD.Print(LS_P * (float)ScaleConversion("ToUnityUnits"));
+        // GD.Print("Done rendering");
+        //GD.Print(ProjectOry.Trajectory);
+        //GD.Print(ProjectOry.TrackStripMesh.SurfaceGetArrays();
         ProjectOry.TrackStripMesh.SurfaceEnd();
         ProjectOry.ObjectRef.TopLevel = true; // disable if relative to another body besides the main soi
         ParentRef.AddChild(ProjectOry.ObjectRef);
+        ProjectOry.ObjectRef.Position = new Vector3();
         // this.NBodyRef = Instantiate(NBodyRef, new Godot.Vector3(0, 0, 0), Godot.Quaternion.identity);
     }
     public void RunBallisticTrack(
