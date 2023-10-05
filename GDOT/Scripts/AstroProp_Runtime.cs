@@ -212,9 +212,13 @@ public partial class AstroProp_Runtime : Node3D
             ParentRef
             );
         Godot.OrmMaterial3D LineMat = new Godot.OrmMaterial3D();
-        LineMat.ShadingMode = BaseMaterial3D.ShadingModeEnum.Unshaded;
+        LineMat.ShadingMode = BaseMaterial3D.ShadingModeEnum.PerPixel; //LineMat.ShadingMode = BaseMaterial3D.ShadingModeEnum.Unshaded;
+        LineMat.EmissionEnabled = true;
+        LineMat.DisableAmbientLight = true;
+        LineMat.Emission = Color.FromHtml("#FF14AF");
+        LineMat.EmissionIntensity = 10;
         LineMat.DisableReceiveShadows = true;
-        LineMat.AlbedoColor = Color.FromHsv(1, 1, 1);
+        LineMat.AlbedoColor = Color.FromHtml("#FF14AF");
 
         ProjectOry.ParentRef = ParentRef;
         ProjectOry.Name = Name;
@@ -255,6 +259,7 @@ public partial class AstroProp_Runtime : Node3D
         ProjectOry.ObjectRef.TopLevel = true; // disable if relative to another body besides the main soi
         ParentRef.AddChild(ProjectOry.ObjectRef);
         ProjectOry.ObjectRef.Position = new Vector3();
+        ProjectOry.ObjectRef.CastShadow = 0;
         // this.NBodyRef = Instantiate(NBodyRef, new Godot.Vector3(0, 0, 0), Godot.Quaternion.identity);
     }
     public void RunBallisticTrack(
@@ -269,7 +274,7 @@ public partial class AstroProp_Runtime : Node3D
             new Godot.Vector3(),
             Reference.SOI.MainReference.GravitationalParameter
             );
-        GD.Print((int)(OrbitalPeriod * 1.5));
+        GD.Print((OrbitalPeriod));
         Vessel.Trajectory = new ProjectOry(
             Vessel.ObjectRef,
             "Ballistic Trajectory",
@@ -278,7 +283,8 @@ public partial class AstroProp_Runtime : Node3D
             Vessel.StateVectors.VelCartesian,
             new Godot.Vector3(),
             (int)Reference.Dynamics.MET,
-            (int)(OrbitalPeriod * 1.5)
+            90*60
+            //(int)(OrbitalPeriod * 1.5)
             );
         SetUpProjectOry(ref Vessel.Trajectory, Vessel.ObjectRef);
     }
@@ -676,7 +682,7 @@ public partial class AstroProp_Runtime : Node3D
             "Sagitta",
             "a spaceship",
             new Godot.Vector3(6789000, 0,0), //6789000 iss altitude meters
-            new Godot.Vector3(0, 0, -7667), //-6576 iss velocity m/s
+            new Godot.Vector3(0, 200, -7667), //-6576 iss velocity m/s
             new Godot.Vector3(0, 0, 0) // zero propulsion
 
 

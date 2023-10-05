@@ -23,6 +23,17 @@ shader_parameter/Color = Vector3(1, 0, 1)
 [sub_resource type="Environment" id="Environment_tpq1j"]
 background_mode = 1
 ambient_light_source = 2
+ssil_radius = 6.51
+sdfgi_use_occlusion = true
+sdfgi_cascades = 1
+sdfgi_max_distance = 25.6
+glow_enabled = true
+glow_intensity = 8.0
+glow_strength = 0.92
+glow_bloom = 0.6
+glow_hdr_scale = 4.0
+volumetric_fog_density = 0.005
+volumetric_fog_albedo = Color(0.317647, 0.0980392, 0.113725, 1)
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_1wmyw"]
 
