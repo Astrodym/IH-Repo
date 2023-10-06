@@ -215,9 +215,10 @@ public partial class AstroProp_Runtime : Node3D
         LineMat.ShadingMode = BaseMaterial3D.ShadingModeEnum.PerPixel; //LineMat.ShadingMode = BaseMaterial3D.ShadingModeEnum.Unshaded;
         LineMat.EmissionEnabled = true;
         LineMat.DisableAmbientLight = true;
+        LineMat.DisableReceiveShadows = true;
         LineMat.Emission = Color.FromHtml("#FF14AF");
         LineMat.EmissionIntensity = 10;
-        LineMat.DisableReceiveShadows = true;
+        
         LineMat.AlbedoColor = Color.FromHtml("#FF14AF");
 
         ProjectOry.ParentRef = ParentRef;
@@ -283,7 +284,7 @@ public partial class AstroProp_Runtime : Node3D
             Vessel.StateVectors.VelCartesian,
             new Godot.Vector3(),
             (int)Reference.Dynamics.MET,
-            259200
+            259200*3
             //(int)(OrbitalPeriod * 1.5)
             );
         SetUpProjectOry(ref Vessel.Trajectory, Vessel.ObjectRef);
@@ -390,8 +391,8 @@ public partial class AstroProp_Runtime : Node3D
             public static double TimeStep = 1 / 1; // seconds in between
             public static double MET = 0; //mean elapsed time
 
-            public static double RandomAssConstant = 9;//9, 8.4 for some odd reason
-            public static double TimeCompression = (1); //100000; // default is 1, 2360448 is 1 lunar month per second
+            public static double RandomAssConstant = 1;//9, 8.4 for some odd reason
+            public static double TimeCompression = (10000); //100000; // default is 1, 2360448 is 1 lunar month per second
 
             public static double DegToRads = Math.PI / 180;
         };
@@ -453,7 +454,7 @@ public partial class AstroProp_Runtime : Node3D
 
         double dtT = MET_Frame;
 
-        double M = dtT*Reference.Dynamics.RandomAssConstant * System.Math.Sqrt(SOI.GravitationalParameter / System.Math.Pow(SOI.SMA, 3));
+        double M = dtT*(Reference.Dynamics.RandomAssConstant * System.Math.Sqrt(SOI.GravitationalParameter / System.Math.Pow(SOI.SMA, 3)));
         // mean anom
         ReturnEccentricAnomaly(M, SOI.Eccentricity, ref E);
         // Class Keplerian = SOI.GetType()
@@ -656,7 +657,7 @@ public partial class AstroProp_Runtime : Node3D
     // Start is called before the first frame update
     public override void _Ready()
     {
-        Reference.Dynamics.TimeCompression = 1;
+        Reference.Dynamics.TimeCompression = 1000;
         GD.Print("Boostrapper Startup");
         // Line ends after this, wtf???
         GD.Print(GetNode<Node3D>("Global/Moon").Position);
@@ -688,8 +689,8 @@ public partial class AstroProp_Runtime : Node3D
             GetNode<Node3D>("Global/Sagitta"),
             "Sagitta",
             "a spaceship",
-            new Godot.Vector3(-6789000, 0,0), //6789000 iss altitude meters
-            new Godot.Vector3(500, 00, -7667-3000), //-6576 iss velocity m/s
+            new Godot.Vector3(410789000, 0, 0), //6789000 iss altitude meters
+            new Godot.Vector3(0, 00, -1600), //-6576 iss velocity m/s
             new Godot.Vector3(0, 0, 0) // zero propulsion
 
 
@@ -704,10 +705,10 @@ public partial class AstroProp_Runtime : Node3D
     }
     public static double LastStep = 0;
     public static double NextStep = Time.GetUnixTimeFromSystem() + Reference.Dynamics.TimeStep / (Reference.Dynamics.TimeCompression);
-    // Update is called once per frame
+    
     public override void _Process(double Delta)
     {
-
+       // Reference.Dynamics.TimeCompression = GetNode<Control>("Control").GetMeta("TimeCompression", new float = 1.0)); just change from witin another script
         double RealTimeInterpolate = Reference.Dynamics.MET;
         bool debug = false;
 

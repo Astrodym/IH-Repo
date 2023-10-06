@@ -28,10 +28,12 @@ sdfgi_use_occlusion = true
 sdfgi_cascades = 1
 sdfgi_max_distance = 25.6
 glow_enabled = true
-glow_intensity = 8.0
-glow_strength = 0.92
-glow_bloom = 0.6
-glow_hdr_scale = 4.0
+glow_intensity = 3.0
+glow_strength = 0.5
+glow_bloom = 0.17
+glow_blend_mode = 0
+glow_hdr_threshold = 4.0
+glow_map_strength = 0.0
 volumetric_fog_density = 0.005
 volumetric_fog_albedo = Color(0.317647, 0.0980392, 0.113725, 1)
 
@@ -39,6 +41,7 @@ volumetric_fog_albedo = Color(0.317647, 0.0980392, 0.113725, 1)
 
 [node name="Astrogation" type="Node3D"]
 script = ExtResource("1_o5ibn")
+metadata/TimeCompression = 1.0
 
 [node name="Global" type="Node3D" parent="."]
 
@@ -89,3 +92,10 @@ camera_attributes = SubResource("CameraAttributesPractical_1wmyw")
 transform = Transform3D(-0.996849, 0, 0.0793289, 0, 1, 0, -0.0793289, 0, -0.996849, 0, 0, 0)
 light_energy = 3.1
 shadow_enabled = true
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+metadata/TimeCompression = 0.0
