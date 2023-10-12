@@ -376,8 +376,8 @@ public partial class AstroProp_Runtime : Node3D
 
         public Node3D ObjectRef;//   = GetNode<Node>("Global/Earth");
 
-        public DiscreteTimestep EphemerisMET_Last;
-        public List<DiscreteTimestep> Ephemeris;
+        public DiscreteTimestep EphemerisMET_Last = new DiscreteTimestep();
+        public List<DiscreteTimestep> Ephemeris = new List<DiscreteTimestep>(10000000);
 
         // default is moon
 
@@ -428,10 +428,10 @@ public partial class AstroProp_Runtime : Node3D
         }
     }
 
-    public void ProjectCelestial(CelestialRender SOI)
+    public void ProjectCelestial(CelestialRender SOI) // run this only once
     {
         DiscreteTimestep StartFrame = new DiscreteTimestep();
-
+        GD.Print(StartFrame.MET);
         ModStateVector_Kep(SOI, StartFrame.MET, ref StartFrame.PosCartesian, ref StartFrame.VelCartesian);
         SOI.Ephemeris.Add(StartFrame);
 
@@ -725,13 +725,14 @@ public partial class AstroProp_Runtime : Node3D
         foreach (var CelestialRender in KeplerContainers)
         {
             DiscreteTimestep NewFrame = CelestialRender.EphemerisMET_Last;
-           
+            GD.Print(CelestialRender.EphemerisMET_Last.MET);
             NewFrame.MET += Reference.Dynamics.TimeStep;
             SY4_Host(ref NewFrame.PosCartesian, ref NewFrame.VelCartesian, NewFrame.MET);
             CelestialRender.Ephemeris.Add(NewFrame);
             CelestialRender.EphemerisMET_Last = NewFrame;
 
             DiscreteTimestep LastState = FindStateSOI(CelestialRender, (int)Reference.Dynamics.MET);
+            GD.Print(LastState.PosCartesian);
             CelestialRender.ObjectRef.Position = LastState.PosCartesian*(float)ScaleConversion("ToUnityUnits");
             // code here for 1-body dynamics
             //CelestialRender.Ephemeris.LastIndexOf();
@@ -790,6 +791,10 @@ public partial class AstroProp_Runtime : Node3D
 
 
         ));
+        foreach (var CelestialRender in KeplerContainers)
+        {
+            ProjectCelestial(CelestialRender);
+        }
         foreach (var NBodyAffected in NByContainers)
         {
             RunBallisticTrack(NBodyAffected);
