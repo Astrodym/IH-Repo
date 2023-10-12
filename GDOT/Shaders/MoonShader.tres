@@ -1,0 +1,36 @@
+[gd_resource type="VisualShader" load_steps=5 format=3 uid="uid://byhec0f2fqwc5"]
+
+[ext_resource type="Texture2D" uid="uid://cyusi7xywur4p" path="res://Shaders/Textures/MoonColor8K.png" id="1_4ve0s"]
+[ext_resource type="Texture2D" uid="uid://duqdqpswkfl11" path="res://Shaders/Textures/MoonDisplacement.png" id="2_ak5q8"]
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_glo26"]
+texture = ExtResource("1_4ve0s")
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_gtehg"]
+texture = ExtResource("2_ak5q8")
+
+[resource]
+code = "shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_schlick_ggx;
+
+uniform sampler2D tex_frg_2;
+
+
+
+void fragment() {
+// Texture2D:2
+	vec4 n_out2p0 = texture(tex_frg_2, UV);
+
+
+// Output:0
+	ALBEDO = vec3(n_out2p0.xyz);
+
+
+}
+"
+nodes/fragment/0/position = Vector2(800, 0)
+nodes/fragment/2/node = SubResource("VisualShaderNodeTexture_glo26")
+nodes/fragment/2/position = Vector2(-200, 220)
+nodes/fragment/3/node = SubResource("VisualShaderNodeTexture_gtehg")
+nodes/fragment/3/position = Vector2(-60, 560)
+nodes/fragment/connections = PackedInt32Array(2, 0, 0, 0)

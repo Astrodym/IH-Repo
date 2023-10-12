@@ -1,10 +1,15 @@
-[gd_scene load_steps=11 format=3 uid="uid://m72oaa82j0x7"]
+[gd_scene load_steps=13 format=3 uid="uid://m72oaa82j0x7"]
 
 [ext_resource type="SphereMesh" uid="uid://hvpsax33j75w" path="res://Prefabs/SOIbasic.tres" id="1_dh6yw"]
 [ext_resource type="Script" path="res://Scripts/AstroProp_Runtime.cs" id="1_o5ibn"]
+[ext_resource type="Shader" uid="uid://byhec0f2fqwc5" path="res://Shaders/MoonShader.tres" id="3_oohyp"]
 [ext_resource type="ArrayMesh" uid="uid://ce2je2focpw66" path="res://Prefabs/NewPlaneMesh.obj" id="3_yje6v"]
 [ext_resource type="Script" path="res://FreecamScript.gd" id="4_fh5v0"]
 [ext_resource type="Shader" path="res://Shaders/LineSegment.gdshader" id="4_svrnh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c0u11"]
+render_priority = 0
+shader = ExtResource("3_oohyp")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4inap"]
 albedo_color = Color(0.411765, 0.627451, 0.984314, 1)
@@ -50,9 +55,10 @@ editor_description = "This is a test to discover if the nodepath even fucking wo
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.5694, 0, -13.5365)
 
 [node name="Moon" type="MeshInstance3D" parent="Global/Moon"]
-transform = Transform3D(1.45614, 2.26477, -0.450993, -2.26529, 1.29741, -0.79881, -0.44835, 0.800297, 2.57127, 0, 0, 0)
+transform = Transform3D(2.73, 0, 0, 0, 2.73001, 0, 0, 0, 2.73, 0, 0, 0)
 mesh = ExtResource("1_dh6yw")
 skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("ShaderMaterial_c0u11")
 
 [node name="Earth" type="Node3D" parent="Global"]
 
@@ -90,7 +96,7 @@ camera_attributes = SubResource("CameraAttributesPractical_1wmyw")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.996849, 0, 0.0793289, 0, 1, 0, -0.0793289, 0, -0.996849, 0, 0, 0)
-light_energy = 3.1
+light_energy = 1.161
 shadow_enabled = true
 
 [node name="Control" type="Control" parent="."]

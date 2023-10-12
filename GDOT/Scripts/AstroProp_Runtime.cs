@@ -93,32 +93,78 @@ public partial class AstroProp_Runtime : Node3D
         PosCartesian = x4;
         VelCartesian = v4;
     }
-    
-    public class StateVectors
+    public void SY4_Host(ref Godot.Vector3 PosCartesian, ref Godot.Vector3 VelCartesian, double MET)
+    {
+        double curt2 = 1.25992104989;
+        double w0 = -(curt2 / (2 - curt2));
+        double w1 = (1 / (2 - curt2));
+
+        double c1 = w1 / 2;
+        double c4 = w1 / 2;
+        double c2 = (w0 + w1) / 2;
+        double c3 = (w0 + w1) / 2;
+
+        double d1 = w1;
+        double d3 = w1;
+        double d2 = w0;
+
+        // PosCartesian = PosCartesian * (float)ScaleConversion("ToRealUnits"); do this when calling le function
+
+        // GD.Print(PosCartesian);
+        Godot.Vector3 x1 = PosCartesian + VelCartesian * (float)(c1 * Reference.Dynamics.TimeStep);
+        Godot.Vector3 a1 = new Godot.Vector3();
+        GravityMain_SOI(x1, MET, ref a1);
+        
+
+        Godot.Vector3 v1 = VelCartesian + (float)(d1) * a1 * (float)Reference.Dynamics.TimeStep;
+        Godot.Vector3 x2 = x1 + (float)c2 * v1 * (float)Reference.Dynamics.TimeStep;
+
+        Godot.Vector3 a2 = new Godot.Vector3();
+        GravityMain_SOI(x2, MET, ref a2);
+        
+
+        Godot.Vector3 v2 = v1 + (float)(d2) * a2 * (float)Reference.Dynamics.TimeStep;
+        Godot.Vector3 x3 = x2 + (float)c3 * v2 * (float)Reference.Dynamics.TimeStep;
+
+        Godot.Vector3 a3 = new Godot.Vector3();
+        GravityMain_SOI(x3, MET, ref a3);
+        
+
+        Godot.Vector3 v3 = v2 + (float)(d3) * a3 * (float)Reference.Dynamics.TimeStep;
+        Godot.Vector3 x4 = x3 + (float)c4 * v3 * (float)Reference.Dynamics.TimeStep;
+
+        Godot.Vector3 v4 = v3;
+        //GD.Print(v4 );//* (float)ScaleConversion("ToUnityUnits")
+        PosCartesian = x4;
+        VelCartesian = v4;
+    }
+
+    public class StateVectors // the properties of a vessel at a given timestep. Complex n-body, all bodies considered 
     {
         public Godot.Vector3 PosCartesian = new Godot.Vector3();
         public Godot.Vector3 VelCartesian = new Godot.Vector3();
 
-        public Godot.Vector3 PrevPosLerp = new Godot.Vector3();
+        public Godot.Vector3 PrevPosLerp = new Godot.Vector3(); //as of now, an unassigned variable. I have future plans for this fella
 
         //noballs variable lmao:
-        public Godot.Vector3 InstantaneousAccel = new Godot.Vector3(); // Instantaneous propulsion by engines to be considered by ship
+        public Godot.Vector3 InstantaneousAccel = new Godot.Vector3(); // Instantaneous propulsion by engines to be considered by ship. 
+    }
+    public class DiscreteTimestep // the statevectors of a celestial body at a given timestep. 1-body computation only concerned with host body soi
+    {
+        public double MET = 0;
+
+        public Godot.Vector3 PosCartesian = new Godot.Vector3();
+        public Godot.Vector3 VelCartesian = new Godot.Vector3();
+
+        public double AxialRotation = 0;
     }
     public class SegmentStepFrame
     {
         public double MET = 0;
 
         public Node3D ObjectRef;
-        
-        
-        public Godot.Vector3 PosCartesian = new Godot.Vector3();
-        public Godot.Vector3 VelCartesian = new Godot.Vector3();
 
-        public Godot.Vector3 PrevPosLerp = new Godot.Vector3();
-
-            //noballs variable lmao:
-        public Godot.Vector3 InstantaneousAccel = new Godot.Vector3(); // Instantaneous propulsion by engines to be considered by ship
-        
+        public StateVectors StateVectors = new StateVectors();
 
         public double DeltaV;
 
@@ -142,10 +188,10 @@ public partial class AstroProp_Runtime : Node3D
            )
         {
             this.MET = MET;
-            //  this.PosCartesian;
-            this.PosCartesian = Prev_Pos;
-            this.VelCartesian = Prev_Vel;
-            this.InstantaneousAccel = Des_Accel;
+            
+            this.StateVectors.PosCartesian = Prev_Pos;
+            this.StateVectors.VelCartesian = Prev_Vel;
+            this.StateVectors.InstantaneousAccel = Des_Accel;
 
             
         }
@@ -159,7 +205,7 @@ public partial class AstroProp_Runtime : Node3D
        
 
         public int StartMET;
-        public int InterruptMET; // public ObjectRef = GetNode<Spatial>("%MyUniqueNodeName");
+        public int InterruptMET;
 
         public Godot.ImmediateMesh TrackStripMesh;
 
@@ -167,7 +213,7 @@ public partial class AstroProp_Runtime : Node3D
         public MeshInstance3D ObjectRef; //this is the node3d that the primitive line strip is parented to
 
         public StateVectors StateVectors = new StateVectors(); // state at the start of the trajectory
-        //LineMat.sha = Godot.BaseMaterial3D.ShadingModeEnum = 1;
+      
 
 
         public List<SegmentStepFrame> Trajectory;
@@ -284,7 +330,7 @@ public partial class AstroProp_Runtime : Node3D
             Vessel.StateVectors.VelCartesian,
             new Godot.Vector3(),
             (int)Reference.Dynamics.MET,
-            259200*3
+            60*90
             //(int)(OrbitalPeriod * 1.5)
             );
         SetUpProjectOry(ref Vessel.Trajectory, Vessel.ObjectRef);
@@ -330,7 +376,8 @@ public partial class AstroProp_Runtime : Node3D
 
         public Node3D ObjectRef;//   = GetNode<Node>("Global/Earth");
 
-
+        public DiscreteTimestep EphemerisMET_Last;
+        public List<DiscreteTimestep> Ephemeris;
 
         // default is moon
 
@@ -376,11 +423,42 @@ public partial class AstroProp_Runtime : Node3D
             this.ArgPeri = ArgPeri;
             this.LongAscen = LongAscen;
             this.MeanAnom = MeanAnom;
+
+            
         }
     }
 
+    public void ProjectCelestial(CelestialRender SOI)
+    {
+        DiscreteTimestep StartFrame = new DiscreteTimestep();
 
+        ModStateVector_Kep(SOI, StartFrame.MET, ref StartFrame.PosCartesian, ref StartFrame.VelCartesian);
+        SOI.Ephemeris.Add(StartFrame);
 
+        DiscreteTimestep LastFrame = StartFrame;
+        for (int i = 1; i <= Reference.Dynamics.EphemerisCeiling; i++)
+        {
+            DiscreteTimestep NewFrame = new DiscreteTimestep();
+            NewFrame = LastFrame;
+            NewFrame.MET += Reference.Dynamics.TimeStep;
+            SY4_Host(ref NewFrame.PosCartesian, ref NewFrame.VelCartesian, NewFrame.MET);
+            SOI.Ephemeris.Add(NewFrame);
+            LastFrame = NewFrame;
+            SOI.EphemerisMET_Last = LastFrame;
+            // code here for 1-body dynamics
+
+        }
+        //StartFrame.PosCartesian;
+
+            //Emphemeris.Add(StartFrame);
+    }
+
+    public static DiscreteTimestep FindStateSOI(CelestialRender SOI, int MET)
+    {
+        return SOI.Ephemeris.Find(x => x.MET == MET);
+
+        // y did I make this a func????
+    }
     public class Reference
     {
         
@@ -392,9 +470,11 @@ public partial class AstroProp_Runtime : Node3D
             public static double MET = 0; //mean elapsed time
 
             public static double RandomAssConstant = 1;//9, 8.4 for some odd reason
-            public static double TimeCompression = (10000); //100000; // default is 1, 2360448 is 1 lunar month per second
+            public static double TimeCompression = (1); //100000; // default is 1, 2360448 is 1 lunar month per second
 
             public static double DegToRads = Math.PI / 180;
+
+            public static int EphemerisCeiling = 60 * 60 * 24 * 27;
         };
 
         public class SOI
@@ -536,12 +616,12 @@ public partial class AstroProp_Runtime : Node3D
     public void GravityGradient(CelestialRender SOI, Godot.Vector3 PosCartesian, double MET_Frame, ref Godot.Vector3 Acceleration)
     {
 
+        DiscreteTimestep LastState = FindStateSOI(SOI, (int)MET_Frame);
 
+        Godot.Vector3 SOI_PosCartesian = LastState.PosCartesian;
+        Godot.Vector3 SOI_VelCartesian = LastState.VelCartesian;
 
-        Godot.Vector3 SOI_PosCartesian = new Godot.Vector3();
-        Godot.Vector3 SOI_VelCartesian = new Godot.Vector3();
-
-        ModStateVector_Kep(SOI, MET_Frame, ref SOI_PosCartesian, ref SOI_VelCartesian);
+       // ModStateVector_Kep(SOI, MET_Frame, ref SOI_PosCartesian, ref SOI_VelCartesian);
 
 
 
@@ -642,7 +722,22 @@ public partial class AstroProp_Runtime : Node3D
 
         Reference.Dynamics.MET += Reference.Dynamics.TimeStep;
         // Begin to do the Celestials 
-        // naaa fuck that
+        foreach (var CelestialRender in KeplerContainers)
+        {
+            DiscreteTimestep NewFrame = CelestialRender.EphemerisMET_Last;
+           
+            NewFrame.MET += Reference.Dynamics.TimeStep;
+            SY4_Host(ref NewFrame.PosCartesian, ref NewFrame.VelCartesian, NewFrame.MET);
+            CelestialRender.Ephemeris.Add(NewFrame);
+            CelestialRender.EphemerisMET_Last = NewFrame;
+
+            DiscreteTimestep LastState = FindStateSOI(CelestialRender, (int)Reference.Dynamics.MET);
+            CelestialRender.ObjectRef.Position = LastState.PosCartesian*(float)ScaleConversion("ToUnityUnits");
+            // code here for 1-body dynamics
+            //CelestialRender.Ephemeris.LastIndexOf();
+            //CelestialRender.Ephemeris
+        }
+
 
         // Perform N-Body Ballistics
 
@@ -657,7 +752,7 @@ public partial class AstroProp_Runtime : Node3D
     // Start is called before the first frame update
     public override void _Ready()
     {
-        Reference.Dynamics.TimeCompression = 1000;
+        Reference.Dynamics.TimeCompression = 1;
         GD.Print("Boostrapper Startup");
         // Line ends after this, wtf???
         GD.Print(GetNode<Node3D>("Global/Moon").Position);
@@ -689,8 +784,8 @@ public partial class AstroProp_Runtime : Node3D
             GetNode<Node3D>("Global/Sagitta"),
             "Sagitta",
             "a spaceship",
-            new Godot.Vector3(410789000, 0, 0), //6789000 iss altitude meters
-            new Godot.Vector3(0, 00, -1600), //-6576 iss velocity m/s
+            new Godot.Vector3(6789000, 0, 0), //6789000 iss altitude meters
+            new Godot.Vector3(0, 00, -7600), //-6576 iss velocity m/s
             new Godot.Vector3(0, 0, 0) // zero propulsion
 
 
@@ -752,7 +847,9 @@ public partial class AstroProp_Runtime : Node3D
 
         foreach (var CelestialRender in KeplerContainers)
         {
-            MoveCelestial(CelestialRender, RealTimeInterpolate);
+            //eventually you will have to interpolate the celestials
+
+            //MoveCelestial(CelestialRender, RealTimeInterpolate);
             //Debug.Log(CelestialRender.Name.ToString());
         }
 
