@@ -479,7 +479,7 @@ public partial class AstroProp_Runtime : Node3D
             public static double TimeStep = 1 / 1; // seconds in between
             public static double MET = 0; //mean elapsed time
 
-            public static double RandomAssConstant = 1;//9, 8.4 for some odd reason
+            public static double RandomAssConstant = 8.564471763787176;//9, 8.4 for some odd reason
             public static double TimeCompression = (100000); //100000; // default is 1, 2360448 is 1 lunar month per second
 
             public static double DegToRads = Math.PI / 180;
@@ -544,7 +544,7 @@ public partial class AstroProp_Runtime : Node3D
 
         double dtT = MET_Frame;
 
-        double M = dtT*(Reference.Dynamics.RandomAssConstant * System.Math.Sqrt(SOI.GravitationalParameter / System.Math.Pow(SOI.SMA, 3)));
+        double M = dtT*(System.Math.Sqrt(SOI.GravitationalParameter / System.Math.Pow(SOI.SMA, 3)));
         // mean anom
         ReturnEccentricAnomaly(M, SOI.Eccentricity, ref E);
         // Class Keplerian = SOI.GetType()
@@ -594,8 +594,9 @@ public partial class AstroProp_Runtime : Node3D
            (float)(O_Dot.Y * (Math.Cos(SOI.ArgPeri) * Math.Cos(SOI.Inclination) * Math.Cos(SOI.LongAscen) - Math.Sin(SOI.ArgPeri) * Math.Sin(SOI.LongAscen)))
             ,
            (float)(O_Dot.X * Math.Sin(SOI.ArgPeri) * Math.Sin(SOI.Inclination)) + (float)(O_Dot.Y * Math.Cos(SOI.ArgPeri) * Math.Sin(SOI.Inclination))
-           );
-
+           )*((float)Reference.Dynamics.RandomAssConstant);
+        GD.Print("Moon vel debug" + VelCartesian.Length());
+        GD.Print(VelCartesian.Length());
 
     }
     public void GravityMain_SOI(Godot.Vector3 PosCartesian, double MET_Frame, ref Godot.Vector3 Acceleration)
