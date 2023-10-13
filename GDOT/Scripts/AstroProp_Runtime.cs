@@ -16,6 +16,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Xml.Serialization;
@@ -151,7 +152,7 @@ public partial class AstroProp_Runtime : Node3D
     }
     public class DiscreteTimestep // the statevectors of a celestial body at a given timestep. 1-body computation only concerned with host body soi
     {
-        public double MET = 0;
+        public int MET = 0;
 
         public Godot.Vector3 PosCartesian = new Godot.Vector3();
         public Godot.Vector3 VelCartesian = new Godot.Vector3();
@@ -216,7 +217,7 @@ public partial class AstroProp_Runtime : Node3D
       
 
 
-        public List<SegmentStepFrame> Trajectory;
+        public Dictionary<int, SegmentStepFrame> Trajectory;
         public ProjectOry( // rendered trajectory
            Node3D ParentRef,
            string Name,
@@ -286,14 +287,14 @@ public partial class AstroProp_Runtime : Node3D
         GD.Print(ProjectOry.StartMET, ProjectOry.InterruptMET);
         GD.Print(LS_P * (float)ScaleConversion("ToUnityUnits"));
         
-        ProjectOry.Trajectory = new List<SegmentStepFrame>(ProjectOry.InterruptMET - ProjectOry.StartMET);
+        ProjectOry.Trajectory = new Dictionary<int,SegmentStepFrame>(1000000000);
         for (int i = ProjectOry.StartMET; i < ProjectOry.InterruptMET; i++)
         {
             SY4(ref LS_P, ref LS_V, ProjectOry.StateVectors.InstantaneousAccel, i);
             SegmentStepFrame Iter_Frame = new SegmentStepFrame(i, LS_P, LS_V, ProjectOry.StateVectors.InstantaneousAccel, false);
             //GD.Print(LS_V);
             //GD.Print(i);
-            ProjectOry.Trajectory.Add(Iter_Frame); // store instantaneous trajectory data here 
+            ProjectOry.Trajectory.Add((int)Iter_Frame.MET, Iter_Frame); // store instantaneous trajectory data here 
             ProjectOry.TrackStripMesh.SurfaceAddVertex(LS_P * (float)ScaleConversion("ToUnityUnits"));
             //ProjectOry.TrackStripMesh.SurfaceAddVertex(LS_P*(float)ScaleConversion("ToUnityUnits"));
             // GD.Print(LS_P * (float)ScaleConversion("ToUnityUnits"));
@@ -342,6 +343,7 @@ public partial class AstroProp_Runtime : Node3D
 
         public Node3D ObjectRef;
 
+        //public int FirstMET_Timestamp = 0; // can be anything, since vessels can be instantialized at any given point -- nvm, kind of redundant
         public StateVectors StateVectors = new StateVectors();
 
         public ProjectOry Trajectory;
@@ -376,8 +378,11 @@ public partial class AstroProp_Runtime : Node3D
 
         public Node3D ObjectRef;//   = GetNode<Node>("Global/Earth");
 
+        //public int FirstMET_Timestamp = 0; // since celestials are set up immediately on run -- redundant lmfao
         public DiscreteTimestep EphemerisMET_Last = new DiscreteTimestep();
-        public List<DiscreteTimestep> Ephemeris = new List<DiscreteTimestep>(10000000);
+        public Dictionary<int,DiscreteTimestep> Ephemeris = new Dictionary<int,DiscreteTimestep>(10000000); // the integer key is going to be the MET of the timestep, just to make shit easier.
+
+
 
         // default is moon
 
@@ -433,16 +438,16 @@ public partial class AstroProp_Runtime : Node3D
         DiscreteTimestep StartFrame = new DiscreteTimestep();
         GD.Print(StartFrame.MET);
         ModStateVector_Kep(SOI, StartFrame.MET, ref StartFrame.PosCartesian, ref StartFrame.VelCartesian);
-        SOI.Ephemeris.Add(StartFrame);
+        SOI.Ephemeris.Add(StartFrame.MET,StartFrame);
 
         DiscreteTimestep LastFrame = StartFrame;
         for (int i = 1; i <= Reference.Dynamics.EphemerisCeiling; i++)
         {
             DiscreteTimestep NewFrame = new DiscreteTimestep();
             NewFrame = LastFrame;
-            NewFrame.MET += Reference.Dynamics.TimeStep;
+            NewFrame.MET += (int)Reference.Dynamics.TimeStep;
             SY4_Host(ref NewFrame.PosCartesian, ref NewFrame.VelCartesian, NewFrame.MET);
-            SOI.Ephemeris.Add(NewFrame);
+            SOI.Ephemeris.Add(NewFrame.MET, NewFrame);
             LastFrame = NewFrame;
             SOI.EphemerisMET_Last = LastFrame;
             // code here for 1-body dynamics
@@ -453,9 +458,13 @@ public partial class AstroProp_Runtime : Node3D
             //Emphemeris.Add(StartFrame);
     }
 
-    public static DiscreteTimestep FindStateSOI(CelestialRender SOI, int MET)
+    public static DiscreteTimestep FindStateSOI(CelestialRender SOI, int MET) //we're using dictionary indexing here, hella faster than list lookup (its not iterative like lists)
     {
-        return SOI.Ephemeris.Find(x => x.MET == MET);
+
+        DiscreteTimestep FoundStep = SOI.Ephemeris[MET];
+       
+       // GD.Print(FoundStep.MET);
+        return FoundStep;
 
         // y did I make this a func????
     }
@@ -725,14 +734,14 @@ public partial class AstroProp_Runtime : Node3D
         foreach (var CelestialRender in KeplerContainers)
         {
             DiscreteTimestep NewFrame = CelestialRender.EphemerisMET_Last;
-            GD.Print(CelestialRender.EphemerisMET_Last.MET);
-            NewFrame.MET += Reference.Dynamics.TimeStep;
+            //GD.Print(CelestialRender.EphemerisMET_Last.MET);
+            NewFrame.MET += (int)Reference.Dynamics.TimeStep;
             SY4_Host(ref NewFrame.PosCartesian, ref NewFrame.VelCartesian, NewFrame.MET);
-            CelestialRender.Ephemeris.Add(NewFrame);
+            CelestialRender.Ephemeris.Add(NewFrame.MET,NewFrame);
             CelestialRender.EphemerisMET_Last = NewFrame;
 
             DiscreteTimestep LastState = FindStateSOI(CelestialRender, (int)Reference.Dynamics.MET);
-            GD.Print(LastState.PosCartesian);
+            //GD.Print(LastState.PosCartesian);
             CelestialRender.ObjectRef.Position = LastState.PosCartesian*(float)ScaleConversion("ToUnityUnits");
             // code here for 1-body dynamics
             //CelestialRender.Ephemeris.LastIndexOf();
