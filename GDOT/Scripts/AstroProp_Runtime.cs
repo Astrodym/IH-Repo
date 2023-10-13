@@ -287,7 +287,7 @@ public partial class AstroProp_Runtime : Node3D
         GD.Print(ProjectOry.StartMET, ProjectOry.InterruptMET);
         GD.Print(LS_P * (float)ScaleConversion("ToUnityUnits"));
         
-        ProjectOry.Trajectory = new Dictionary<int,SegmentStepFrame>(1000000000);
+        ProjectOry.Trajectory = new Dictionary<int,SegmentStepFrame>(10000000);
         for (int i = ProjectOry.StartMET; i < ProjectOry.InterruptMET; i++)
         {
             SY4(ref LS_P, ref LS_V, ProjectOry.StateVectors.InstantaneousAccel, i);
@@ -299,6 +299,7 @@ public partial class AstroProp_Runtime : Node3D
             //ProjectOry.TrackStripMesh.SurfaceAddVertex(LS_P*(float)ScaleConversion("ToUnityUnits"));
             // GD.Print(LS_P * (float)ScaleConversion("ToUnityUnits"));
         };
+        GD.Print("Projected");
         //GD.Print(LS_P * (float)ScaleConversion("ToUnityUnits"));
         // GD.Print("Done rendering");
         //GD.Print(ProjectOry.Trajectory);
@@ -479,7 +480,7 @@ public partial class AstroProp_Runtime : Node3D
             public static double MET = 0; //mean elapsed time
 
             public static double RandomAssConstant = 1;//9, 8.4 for some odd reason
-            public static double TimeCompression = (1); //100000; // default is 1, 2360448 is 1 lunar month per second
+            public static double TimeCompression = (100000); //100000; // default is 1, 2360448 is 1 lunar month per second
 
             public static double DegToRads = Math.PI / 180;
 
@@ -726,7 +727,7 @@ public partial class AstroProp_Runtime : Node3D
         if (Reference.Dynamics.MET == (2360448))
         {
             GD.Print("Lunar orbit debug");
-            Reference.Dynamics.TimeCompression = 1;
+            //Reference.Dynamics.TimeCompression = 1;
         }
 
         Reference.Dynamics.MET += Reference.Dynamics.TimeStep;
@@ -762,7 +763,7 @@ public partial class AstroProp_Runtime : Node3D
     // Start is called before the first frame update
     public override void _Ready()
     {
-        Reference.Dynamics.TimeCompression = 1;
+        //Reference.Dynamics.TimeCompression = 1;
         GD.Print("Boostrapper Startup");
         // Line ends after this, wtf???
         GD.Print(GetNode<Node3D>("Global/Moon").Position);
