@@ -28,6 +28,8 @@ shader_parameter/Color = Vector3(1, 0, 1)
 [sub_resource type="Environment" id="Environment_tpq1j"]
 background_mode = 1
 ambient_light_source = 2
+ambient_light_color = Color(0.0352941, 0.0588235, 0.160784, 1)
+ambient_light_energy = 1.63
 ssil_radius = 6.51
 sdfgi_use_occlusion = true
 sdfgi_cascades = 1
